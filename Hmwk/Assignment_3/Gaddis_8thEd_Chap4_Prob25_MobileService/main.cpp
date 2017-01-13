@@ -77,4 +77,3 @@ int main(int argc, char** argv) {
     cout << "Bill: " << bill << endl;
     return 0;
 }
-

@@ -5,6 +5,14 @@
  *
  * Created on January 12, 2017, 10:09 AM
  * 
+ * 27. Mobile Service Provider, Part 3
+ * Months with 30 days have 720 hours, and months with 31 days have 744 hours.
+ * February, with 28 days, has 672 hours. You can calculate the number of
+ * minutes in a month by multiplying its number of hours by 60. Enhance the
+ * input validation of the Mobile Service Provider program by asking the user
+ * for the month (by name), and validating that the number of minutes entered
+ * is not more than the maximum for the entire month. Here is a table of the
+ * months, their days, and number of hours in each.
  * 
  */
 
@@ -13,47 +21,15 @@
 
 using namespace std;
 
-short getMinsInMonth(string month)
+int main(int argc, char** argv)
 {
-    switch (month)
-    {
-        case "January":
-            return 744 * 60;
-        case "February":
-            return 672 * 60;
-        case "March":
-            return 744 * 60;
-        case "April":
-            return 720 * 60;
-        case "May":
-            return 744 * 60;
-        case "June":
-            return 720 * 60;
-        case "July":
-            return 744 * 60;
-        case "August":
-             return 744 * 60;
-        case "September":
-             return 720 * 60;
-        case "October":
-             return 744 * 60;
-        case "November":
-             return 720 * 60;
-        case "December":
-             return 744 * 60;
-        default:
-            return 0;
-    }
-}
-
-int main(int argc, char** argv) {
     char package = 'A';
-    short minutes = 0;
+    int minutes = 0;
     float bill = 0;
     // the month string entered by the user
     string month;
     // the number of minutes in the month entered by the user
-    short numMin;
+    int numMin;
     
     cout << "This program will calculate your phone bill.\n" << endl;
      
@@ -67,10 +43,58 @@ int main(int argc, char** argv) {
         return 0;
     }
     
-    cout << "For what month would you like to see the phone bill? ";
+    cout << "For what month would you like to see the phone bill? "
+            "(Capitalize first letter) ";
     cin >> month;
     
-    cout << getMinsInMonth("August") << endl;
+    if (month == "January")
+    {
+        numMin = 744 * 60;
+    }
+    else if (month == "February")
+    {
+        numMin = 672 * 60;
+    }
+    else if (month == "March")
+    {
+        numMin = 744 * 60;;
+    }        
+    else if (month == "April")
+    {
+        numMin = 720 * 60;
+    }       
+    else if (month == "May")
+    {
+        numMin = 744 * 60;
+    }    
+    else if (month == "June")
+    {
+        numMin = 720 * 60;
+    }    
+    else if (month == "July")
+    {
+        numMin = 744 * 60;
+    }    
+    else if (month == "August")
+    {
+        numMin = 744 * 60;
+    }    
+    else if (month == "September")
+    {
+        numMin = 720 * 60;
+    }    
+    else if (month == "October")
+    {
+        numMin = 744 * 60;
+    }    
+    else if (month == "November")
+    {
+        numMin = 720 * 60;
+    }    
+    else if (month == "December")
+    {
+        numMin = 744 * 60;
+    }    
     
     // if package C, minutes don't matter, don't ask
     if (package != 'C')
@@ -78,6 +102,14 @@ int main(int argc, char** argv) {
         // prompt user for minutes used
         cout << "How many minutes were used? ";
         cin >> minutes;
+    }
+    
+    // if minutes entered is greater than minutes in the chosen month
+    if (minutes > numMin)
+    {
+        cout << "The number of minutes is greater than the total minutes "
+                "in the month of " << month << "." << endl;
+        return 0;
     }
     
     if (package == 'A')

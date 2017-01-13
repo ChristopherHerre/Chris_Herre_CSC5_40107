@@ -5,6 +5,11 @@
  *
  * Created on January 12, 2017, 10:09 AM
  * 
+ * 26. Mobile Service Provider, Part 2
+ * Modify the Program in Programming Challenge 25 so that it also displays how
+ * much money Package A customers would save if they purchased packages B or C,
+ * and how much money Package B customers would save if they purchased
+ * Package C. If there would be no savings, no message should be printed.
  * 
  */
 
