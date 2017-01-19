@@ -25,35 +25,44 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
 int main(int argc, char** argv) {
-    short floors, totalRooms = 0;
+    short floors, totalRooms = 0, totalOccupied = 0;
     
+    // set format for decimal numbers
+    cout << fixed << setprecision(2);
+    // prompt the user to enter the number of floors
     cout << "How many floors does the hotel have? ";
     cin >> floors;
     
     if (floors < 1)
     {
+        // there must be at least one floor
         cout << "Floors cannot be less than 1!" << endl;
         return 0;
     }
     
     for (int i = 1; i <= floors; i++)
     {
+        // skip floor 13
         if (i == 13)
         {
             cout << ". . . Skipping the 13th floor . . . " << endl;
             continue;
         }
         
-        float rooms, occupied;
+        short rooms, occupied;
         
+        // prompt user to enter the rooms on this floor
         cout << "How many rooms are on floor " << i << "? ";
         cin >> rooms;
+        // add rooms to totalRooms
         totalRooms += rooms;
         
+        // check if the rooms on the floor is less than 10
         if (rooms < 10)
         {
             cout << "There should be at least 10 rooms per floor!" << endl;
@@ -63,6 +72,8 @@ int main(int argc, char** argv) {
         cout << "How many rooms are occupied on this floor? ";
         cin >> occupied;
         
+        // check if occupied rooms is greater than the number of rooms on
+        // this floor. That would make no sense.
         if (occupied > rooms)
         {
             cout << "Rooms occupied cannot be greater than the total number of"
@@ -70,10 +81,16 @@ int main(int argc, char** argv) {
             break;
         }
         
-        float occupancy = occupied / rooms;
-        cout << i << " " << occupied << "/" << rooms << " occupancy=" << occupancy << "%" << " unoccupancy= " << 1.0 - occupancy << "%" << endl;
+        // add occupied to totalOccupied
+        totalOccupied += occupied;
     }
-    cout << "Total rooms: " << totalRooms << endl;
+    
+    // display total rooms in the hotel, and how many are occupied
+    cout << "Total rooms: " << totalRooms << " totalOccupied: " << totalOccupied
+            << " totalUnoccupied: " << totalRooms - totalOccupied << endl;
+    // cast totalOccupied and totalRooms to doubles,
+    // then divide to get occupancy
+    cout << "Occupancy: " << (static_cast<float>(totalOccupied) /
+            static_cast<float>(totalRooms)) * 100 << "%" << endl;
     return 0;
 }
-
