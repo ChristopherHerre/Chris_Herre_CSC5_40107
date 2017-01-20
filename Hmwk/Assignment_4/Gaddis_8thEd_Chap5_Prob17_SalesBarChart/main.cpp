@@ -30,12 +30,16 @@
 #include <cstdlib>
 #include <iostream>
 #include <cmath>
+
 using namespace std;
 
 int main(int argc, char** argv) {
-    const int MAX_DIVS = 5;
-    float sales[MAX_DIVS];
+    // the number of stores
+    const int NUM_STORES = 5;
+    // a float for each store to store the sales
+    float sales[NUM_STORES];
     
+    // prompt user to input sales for each store
     cout << "Enter today's sales for store 1: ";
     cin >> sales[0];
     cout << "Enter today's sales for store 2: ";
@@ -47,16 +51,40 @@ int main(int argc, char** argv) {
     cout << "Enter today's sales for store 5: ";
     cin >> sales[4];
     
-
-    for( int i = 0; i < MAX_DIVS ; i++){
-        short stars = sales[i]/ 100.0;
-        for (int s = 0; s< stars ; s++) 
+    // display output
+    cout << "SALES BAR CHART\n(Each * = $100)" << endl;
+    
+    // loop each store
+    for (int i = 0; i < NUM_STORES; i++)
+    {
+        // add one star for each $100 in sales
+        short stars = sales[i] / 100.0;
+        
+        switch (i)
+        {
+            case 0:
+                cout << "Store 1: ";
+                break;
+            case 1:
+                cout << "Store 2: ";
+                break;
+            case 2:
+                cout << "Store 3: ";
+                break;
+            case 3:
+                cout << "Store 4: ";
+                break;
+            case 4:
+                cout << "Store 5: ";
+                break;                    
+        }
+        
+        // loop stars and output
+        for (int j = 0; j < stars; j++) 
         {
             cout << "*";
         }
-        cout<<endl;
+        cout << endl;
     }
-    
     return 0;
 }
-

@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux
-CND_ARTIFACT_NAME_Debug=gaddis_8thed_chap5_prob17_salesbarchart
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/gaddis_8thed_chap5_prob17_salesbarchart
+CND_ARTIFACT_NAME_Debug=chap5menu
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/chap5menu
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
-CND_PACKAGE_NAME_Debug=gaddis8thedchap5prob17salesbarchart.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/gaddis8thedchap5prob17salesbarchart.tar
+CND_PACKAGE_NAME_Debug=chap5menu.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/chap5menu.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
-CND_ARTIFACT_NAME_Release=gaddis_8thed_chap5_prob17_salesbarchart
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/gaddis_8thed_chap5_prob17_salesbarchart
+CND_ARTIFACT_NAME_Release=chap5menu
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/chap5menu
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
-CND_PACKAGE_NAME_Release=gaddis8thedchap5prob17salesbarchart.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/gaddis8thedchap5prob17salesbarchart.tar
+CND_PACKAGE_NAME_Release=chap5menu.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/chap5menu.tar
 #
 # include compiler specific variables
 #

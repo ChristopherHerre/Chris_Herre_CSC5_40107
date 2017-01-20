@@ -28,7 +28,7 @@ using namespace std;
 
 int main(int argc, char** argv) {
     short days;
-    // the user might want to know their pay after a year, so we need a double
+    // limited precision
     double pay = 0.01, sum = 0;
     
     // set format to two digits after decimal
