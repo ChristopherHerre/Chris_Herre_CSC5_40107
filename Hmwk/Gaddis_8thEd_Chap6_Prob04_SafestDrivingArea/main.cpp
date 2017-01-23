@@ -29,8 +29,22 @@
 
 using namespace std;
 
-int main(int argc, char** argv) {
+int getNumAccidents(string);
+void findLowest(short []);
 
+const string REGIONS[] = { "north", "south", "east", "west", "central" };
+
+int main(int argc, char** argv) {
+    short numAccidents[5];
+
+    // populate numAccidents array with the return value of getNumAccidents
+    // for each region
+    for (int i = 0; i < 5; i++)
+    {
+        numAccidents[i] = getNumAccidents(REGIONS[i]);
+    }
+    // call findLowest function
+    findLowest(numAccidents);
     return 0;
 }
 
@@ -38,18 +52,38 @@ int getNumAccidents(string region)
 {
     short accidents;
     
+    // prompt user to input the number of accidents for the given region
     cout << "What is the number of automobile accidents in the " << region
             << " region? ";
     cin >> accidents;
     
+    // validate input, cannot be negative # of accidents
     if (accidents < 0)
     {
-        
+        cout << "Cannot accept an accident number less than 0!" << endl;
+        return -1;
     }
+    return accidents;
 }
 
-void findLowest()
+void findLowest(short accidents[])
 {
+    // set lowest to a value larger than any inputs to the accidents array
+    short lowest = 30000;
+    unsigned char lowestIndex = 0;
     
+    // loop for each index in our regions array
+    for (int i = 0; i < 5; i++)
+    {
+        if (accidents[i] < lowest)
+        {
+            lowestIndex = i;
+            // reassign lowest to the actual lowest value so far
+            // through the loop
+            lowest = accidents[i];
+        }
+    }
+    // output which region had the least accidents
+    cout << "The " << REGIONS[lowestIndex] << " region had the least amount of"
+            " accidents at " << lowest << " accidents last year." << endl;
 }
-
