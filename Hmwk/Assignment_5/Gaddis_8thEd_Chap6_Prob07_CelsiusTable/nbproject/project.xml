@@ -3,7 +3,7 @@
     <type>org.netbeans.modules.cnd.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>Gaddis_8thEd_Chap6_Prob03_WinningDivision</name>
+            <name>Gaddis_8thEd_Chap6_Prob07_CelsiusTable</name>
             <c-extensions/>
             <cpp-extensions>cpp</cpp-extensions>
             <header-extensions/>
