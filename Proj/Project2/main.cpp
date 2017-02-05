@@ -10,21 +10,83 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include <fstream>
+// this library is for the sleep function used
+#include <unistd.h>
 
 using namespace std;
 
 void start();
 string getEmpty(string);
 void displayTitle();
+void displaySubtext();
 void setContains(string, char, char [], bool&);
 void handleIncorrect(bool, string&, char, int&, bool&, char []);
-void printProgress(string, string, char []);
+void printProgress(string, string&, char []);
 bool alreadyGuessed(short, char, char []);
 void setGallows(string&, int);
+void doMenu();
+
+int score = 0;
 
 int main(int argc, char** argv) {
-    start();
+    do
+    {
+        doMenu();
+    } while (true);
     return 0;
+}
+
+void doMenu()
+{
+    char c;
+    
+    system("clear");
+    
+    // print the menu
+    displayTitle();
+    cout << "1) Play Hangman" << endl;
+    cout << "2) Show my score" << endl;
+    cout << "3) Tutorial" << endl;
+    cout << "4) Close\n" << endl;
+    cout << "Enter your choice: ";
+    
+    // prompt for choice
+    cin >> c;
+
+    switch (c - 48)
+    {
+        case 1:
+            // start hangman
+            start();
+            break;
+        case 2:
+            // print score, wait, then go back to menu
+            cout << "\nScore: " << score << endl;
+            sleep(3);
+            break;
+        case 3:
+            // print instructions page, wait for next input then go back to menu
+            char b;
+            system("clear");
+            displayTitle();
+            cout << "Instructions:\n\n* Solve the phrase by guessing the "
+                    "characters that fill in the blanks.\n* You have 7 "
+                    "attempts to solve the phrase, each wrong guess will "
+                    "print part\n* of the hangman. When the hangman is "
+                    "fully drawn, you lose and -10 points\n* is taken "
+                    "from your score. Another -1 is taken for each wrong "
+                    "guess you\n* enter. If you guess the phrase before "
+                    "the hangman is fully drawn, you will\n* be awarded "
+                    "12 score points." << endl;
+            cout << "\nEnter b to return" << endl;
+            cin >> b;
+            break;
+        case 4:
+            // exit the program
+            exit(0);
+            break;
+    }
 }
 
 void start()
@@ -47,30 +109,34 @@ void start()
 
     srand(static_cast<unsigned int>(time(0)));
 
+    // is hangman running?
     bool running = true;
     const string phrases[] = { 
-            "Chris Herre", "Project One", "Gaddis 8th Edition",
+            "Chris Herre", "Project Two", "Gaddis 8th Edition",
             "Linux Kernel", "Dennis Ritchie" };
     // the randomized selection from the phrases array
     string randChoice = phrases[rand() % 5];
     // the array of correct guesses
-    char characters[randChoice.size()];
+    char correct[randChoice.size()];
     // set problem to a blank string of the same length as randChoice
     // we do this so problem != randChoice, but we know how many chars
     // to ask for
     string problem = getEmpty(randChoice);
     // the amount of incorrect guesses
     int incorrect = 0;
+    // does the phrase contain guess?
     bool contains = false;
+    // the wrong guesses
     char wrongs[7] = {};
     // the character we will guess this iteration
     char guess = '\0';
     
     while (running)
     {   
-        displayTitle();
+        system("clear");
+        //displayTitle();
         // set contains to true if guess is contained within phrase
-        setContains(randChoice, guess, characters, contains);
+        setContains(randChoice, guess, correct, contains);
         
         // check if we should handle an incorrect guess and handle it if needed
         handleIncorrect(contains, gallows, guess, incorrect,
@@ -84,12 +150,16 @@ void start()
         // end game due to too many incorrect guesses
         if (incorrect >= 7)
         {
+            score -= 10;
+            // this stops the skipping of the last frame from visibility
+            sleep(3);
             // restart
-            start();
+            doMenu();
             break;
         }
         
-        printProgress(randChoice, problem, characters);
+        // print the blank spaces yet to be solved or the solved characters
+        printProgress(randChoice, problem, correct);
         
         cout << "\n\nPhrase: '" << randChoice << "'" << endl;
         cout << "\nSolved: '" << problem << "'\n" << endl;
@@ -104,8 +174,17 @@ void start()
         }
         else
         {
+            // process game win
+            ofstream outputFile;
+            outputFile.open("hangman_games.txt"); 
+            
+            outputFile << gallows;
+            outputFile.close();
+            
+            score += 12;
             cout << "\n\nYou win!!" << endl;
             running = false;
+            sleep(2);
         }
     }
 }
@@ -141,7 +220,7 @@ void displayTitle()
 }
 
 // sets contains to true if guess is contained within randChoice
-void setContains(string randChoice, char guess, char characters[],
+void setContains(string randChoice, char guess, char correct[],
         bool& contains)
 {
     // loop through all chars of randChoice string
@@ -152,7 +231,7 @@ void setContains(string randChoice, char guess, char characters[],
         {
             char outChar = (randChoice[i] == toupper(guess) ?
                 toupper(guess) : tolower(guess));
-            characters[i] = outChar;
+            correct[i] = outChar;
             contains = true;
         }
     }
@@ -172,7 +251,8 @@ void handleIncorrect(bool contains, string& gallows, char guess,
         {
             return;
         }
-
+        
+        score -= 1;
         cout << "Incorrect Guesses: " << incorrect + 1 << endl;
         invalids[incorrect] = guess;
 
@@ -343,7 +423,7 @@ void setGallows(string& gallows, int incorrect)
 }
 
 // prints all correctly guessed characters or blank spaces
-void printProgress(string randChoice, string problem, char characters[])
+void printProgress(string randChoice, string& problem, char correct[])
 {
     for (int j = 0; j < randChoice.size(); j++)
     {
@@ -354,12 +434,12 @@ void printProgress(string randChoice, string problem, char characters[])
             cout << "   ";
         }
         // if we enter a correctly guessed char
-        else if (randChoice[j] == characters[j])
+        else if (randChoice[j] == correct[j])
         {
             // print a correctly guessed char
-            cout << characters[j] << " ";
-            // set char in problem string at index j to characters[j]
-            problem[j] = characters[j];
+            cout << correct[j] << " ";
+            // set char in problem string at index j to correct[j]
+            problem[j] = correct[j];
         }
         else
         {
