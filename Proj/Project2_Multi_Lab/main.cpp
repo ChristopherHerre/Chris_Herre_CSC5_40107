@@ -13,6 +13,7 @@
 #include <fstream>
 #include <vector>
 #include <iomanip>
+#include <ctime>
 // this library is for the sleep function used
 #include <unistd.h>
 
@@ -40,6 +41,7 @@ void handleUserInput(string&, string&, string,
         string, char [], char [], short [],
         short&, int&, short&, bool&,
         bool&, bool&);
+void sort(vector<pair<int, string> > &, short);
 
 int main(int argc, char** argv)
 {
@@ -75,6 +77,8 @@ void doMenu()
                 start();
                 break;
             case 2:
+                cout << "Results are bubble sorted from greatest to least:"
+                        << endl;
                 showLastGame();
                 break;
             case 3:
@@ -494,6 +498,7 @@ void showLastGame()
 // notice: vector is passed by value!
 void outputToFile(vector<pair<int, string> > scoreboard, short players)
 {
+    sort(scoreboard, players);
     ofstream outputFile;
     outputFile.open("hangman_games.txt"); 
 
@@ -616,3 +621,25 @@ void handleUserInput(string& gallows, string& guess, string randChoice,
         activePlayer = 0;
     }
 }
+
+// bubble sort the vector
+void sort(vector<pair<int, string> > &scoreboard, short players)
+{
+    bool swap;
+    short temp;
+    
+    do
+    {
+        swap = false;
+        for (int i = 0; i < players - 1; i++)
+        {
+            if (scoreboard[i].first < scoreboard[i + 1].first)
+            {
+                temp = scoreboard.at(i + 1).first;
+                scoreboard[i + 1].first = scoreboard[i].first;
+                scoreboard[i].first = temp;
+                swap = true;
+            }
+        }
+    } while (swap);
+} 

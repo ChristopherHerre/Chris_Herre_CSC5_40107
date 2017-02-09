@@ -1,4 +1,4 @@
-chris                     3
-tim                       6
-john                     16
-jeff                      6
+chris                     6
+john                      6
+bob                       4
+steve                     2
