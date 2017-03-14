@@ -48,9 +48,10 @@ int main(int argc, char** argv)
             card = ALL;
             break;
     }
+    
     short len = 0;
     string s = genCC(card, len);
-    cout << "s= " << s << endl;
+    cout << "string length: " << s.length() << "\ts= " << s << endl;
     luhn(s, len);
     return 0;
 }
@@ -66,13 +67,15 @@ string genCC(CrdCard c, short& len)
             len = 15;
             start = (rand() % 2 + 1 == 1 ? "34" : "37");
             
-            cout << len << " " << start << endl;
+            cout << "card number length: " << len << "\tprefix: " << start
+                    << endl;
             break;
         case VISA:
             len = rand() % 2 + 1 == 1 ? 13 : 16;
             start = "4";
             
-            cout << len << endl;
+            cout << "card number length: " << len << "\tprefix: " << start
+                    << endl;
             break;
         case MASTER_CARD:
             len = rand() % 2 + 1 == 1 ? 16 : 19;
@@ -96,7 +99,8 @@ string genCC(CrdCard c, short& len)
                     break;
             }
             
-            cout << len << " " << start << endl;
+            cout << "card number length: " << len << "\tprefix: " << start
+                    << endl;
             break;
         case DISCOVER:
             len = 16;
@@ -134,22 +138,26 @@ string genCC(CrdCard c, short& len)
                     start = "65";
                     break;
             }
-            cout << len << " " << start << endl;
+            cout << "card number length: " << len << "\tprefix: " << start
+                    << endl;
             break;
         case ALL:
-            
+            // not sure how to handle?
+            cout << "Error - The ALL option is not yet handled!" << endl;
             break;
     }
     
-    cc = start;
-    
-    //len -= start.size();
-    
-    //cout << "   " << start;
+    // according to the wikipedia page, prepending a 0 to an odd-length
+    // credit card number will allows the number to be processed from left to
+    // right
+    if (len % 2 != 0)
+    {
+        cc += '0';
+    }
+    cc += start;
     
     for (int i = start.size(); i < len; i++)
     {
-        //srand(static_cast<unsigned int>(time(0)));
         short c = rand() % 10;
         cc += static_cast<char>(c + 48);
         
@@ -224,7 +232,7 @@ void luhn(string number, short len)
     // print the total of the sums
     cout << total << endl;
     // print the check digit
-    cout << "x = " << total * 9 % 10;
+    cout << "check digit x = " << total * 9 % 10;
 }
 
 // example: converts a string "1" to a short 1
@@ -267,4 +275,9 @@ short stringToNumber(char s)
         return 9;
     }
     return -1;
+}
+
+void flipDigit()
+{
+    
 }
