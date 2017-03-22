@@ -6,7 +6,9 @@
  */
 
 #include <cstdlib>
+#include <string>
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -15,52 +17,73 @@ enum CrdCard
     AMERICAN_EXPRESS,
     VISA,
     MASTER_CARD,
-    DISCOVER,
-    ALL 
+    DISCOVER
 };
 
-void luhn(string, short);
-string genCC(CrdCard, short&);
-short stringToNumber(char);
-void flipDigit(string&);
+short luhn(string, short, ofstream&);
+string genCC(CrdCard, short&, ofstream&);
+short charToNumber(char);
+void transpose(string&, ofstream&);
+bool validCC(short, short, int&, int&, ofstream&);
+CrdCard getCardType(short);
 
 int main(int argc, char** argv)
 {
+    ofstream out;
+    out.open("output.txt");
     srand(static_cast<unsigned int>(time(0)));
-    short ran = static_cast<short>(rand() % 5);
-    CrdCard card;
-    
-    switch (ran)
+    int valids = 0;
+    int invalids = 0;
+    cout << "Starting file output to output.txt . . ." << endl;
+        
+    for (int i = 0; i < 10000; i++)
     {
-        case 0:
-            card = AMERICAN_EXPRESS;
-            break;
-        case 1:
-            card = DISCOVER;
-            break;
-        case 2:
-            card = MASTER_CARD;
-            break;
-        case 3:
-            card = VISA;
-            break;
-        case 4:
-            card = ALL;
-            break;
+        short ran = static_cast<short>(rand() % 4);
+        CrdCard card = getCardType(ran);
+        short len = 0;
+        out << endl;
+        string s = genCC(card, len, out);
+        out << "string length: " << s.length() << "\ts= " << s << endl;
+        short luhnFirst = luhn(s, len, out);
+        transpose(s, out);
+        out << "string length: " << s.length() << "\ts= " << s << endl;
+        short luhnSecnd = luhn(s, len, out);
+        bool valid = validCC(luhnFirst, luhnSecnd, valids, invalids, out);
+        out << (valid ? "true" : "false") << endl;
     }
-    
-    short len = 0;
-    string s = genCC(card, len);
-    cout << "string length: " << s.length() << "\ts= " << s << endl;
-    luhn(s, len);
-    
-    flipDigit(s);
-    cout << "string length: " << s.length() << "\ts= " << s << endl;
-    luhn(s, len);
+    // file out
+    out << "\nValids:\t" << valids << endl;
+    out << "Invalids:\t" << invalids << endl;
+    // console out
+    cout << "\nValids:\t" << valids << endl;
+    cout << "Invalids:\t" << invalids << endl;
+    out.close();
+    cout << "Done! " << endl;
     return 0;
 }
 
-string genCC(CrdCard c, short& len)
+// validate the cc #s by performing the luhn algorithm on the original cc number
+// and the transposed version of the cc number. If the check sums are equal,
+// then the cc number is valid.
+bool validCC(short luhnFirst, short luhnSecnd, int& valids, int& invalids,
+        ofstream& out)
+{
+    if (luhnFirst == luhnSecnd)
+    {
+        valids++;
+        out << "Adding to valids. Valids:\t" << valids << endl;
+        return true;
+    }
+    else
+    {
+        invalids++;
+        out << "Adding to invalids. Invalids:\t" << invalids << endl;
+    }
+    return false;
+}
+
+// generate a variable length cc number given a CrdCard.
+string genCC(CrdCard c, short& len, ofstream& out)
 {
     string start = "";
     string cc;
@@ -70,20 +93,17 @@ string genCC(CrdCard c, short& len)
         case AMERICAN_EXPRESS:
             len = 15;
             start = (rand() % 2 + 1 == 1 ? "34" : "37");
-            
-            cout << "card number length: " << len << "\tprefix: " << start
+            out << "card number length: " << len << "\tprefix: " << start
                     << endl;
             break;
         case VISA:
             len = rand() % 2 + 1 == 1 ? 13 : 16;
             start = "4";
-            
-            cout << "card number length: " << len << "\tprefix: " << start
+            out << "card number length: " << len << "\tprefix: " << start
                     << endl;
             break;
         case MASTER_CARD:
             len = rand() % 2 + 1 == 1 ? 16 : 19;
-            
             switch (rand() % 5 + 1)
             {
                 case 1:
@@ -102,8 +122,7 @@ string genCC(CrdCard c, short& len)
                     start = "55";
                     break;
             }
-            
-            cout << "card number length: " << len << "\tprefix: " << start
+            out << "card number length: " << len << "\tprefix: " << start
                     << endl;
             break;
         case DISCOVER:
@@ -142,17 +161,13 @@ string genCC(CrdCard c, short& len)
                     start = "65";
                     break;
             }
-            cout << "card number length: " << len << "\tprefix: " << start
+            out << "card number length: " << len << "\tprefix: " << start
                     << endl;
-            break;
-        case ALL:
-            // not sure how to handle?
-            cout << "Error - The ALL option is not yet handled!" << endl;
             break;
     }
     
     // according to the wikipedia page, prepending a 0 to an odd-length
-    // credit card number will allows the number to be processed from left to
+    // credit card number will allow the number to be processed from left to
     // right
     if (len % 2 != 0)
     {
@@ -164,38 +179,33 @@ string genCC(CrdCard c, short& len)
     {
         short c = rand() % 10;
         cc += static_cast<char>(c + 48);
-        
     }
-
     return cc;
 }
 
-void luhn(string number, short len)
+// returns the checksum or x value
+short luhn(string number, short len, ofstream& out)
 {
-    
     // the 3rd line that shows the sums
     short result[20] = {};
-    
     // tab each number in the array
     for (int i = 0; i < len; i++)
     {
-        cout << number[i] << "\t";
+        out << number[i] << "\t";
     }
-    
-    cout << "x" << endl;
-    
+    out << "x" << endl;
     for (int i = 0; i < len; i++)
     {
         short sum = 0;
         // converts a string into a short
-        short num = stringToNumber(number[i]);
+        short num = charToNumber(number[i]);
         
         // every other number
         if (i % 2 != 0)
         {
             // double and display every other number
             short x2 = num * 2;
-            cout << x2 << "\t";
+            out << x2 << "\t";
             
             if (x2 > 9)
             {
@@ -218,30 +228,46 @@ void luhn(string number, short len)
         else
         {
             // print the numbers from the first line that do not get doubled
-            cout << num << "\t";
+            out << num << "\t";
             result[i] = num;
         }
     }
-    
-    cout << "x" << endl;
-    
+    out << "x" << endl;
     short total = 0;
     short checkDigit = -1;
-    
-    // add up the total of the sums
+        // add up the total of the sums
     for (int i = 0; i < len; i++)
     {
-        cout << result[i] << "\t";
+        out << result[i] << "\t";
         total += result[i];
     }
     // print the total of the sums
-    cout << total << endl;
+    out << total << endl;
+    checkDigit = total * 9 % 10;
     // print the check digit
-    cout << "check digit x = " << total * 9 % 10;
+    out << "check digit x = " << checkDigit << endl;
+    return checkDigit;
+}
+
+void transpose(string& cc, ofstream& out)
+{
+    out << endl;
+    // transpose a randomly chosen char to its right-adjacent char
+    // ex OG CC:       6478301126991215
+    // CC:             6478031126991215
+
+    short randIdx = rand() % cc.size();
+    out << "randIdx= " << randIdx << endl;
+    char temp = cc[randIdx + 1];
+    out << "OG CC:\t" << cc << endl;
+    
+    cc[randIdx + 1] = cc[randIdx];
+    cc[randIdx] = temp;
+    out << "CC:\t\t" << cc << endl;
 }
 
 // example: converts a char '1' to a short 1
-short stringToNumber(char s)
+short charToNumber(char s)
 {
     if (s == '1')
     {
@@ -282,18 +308,17 @@ short stringToNumber(char s)
     return -1;
 }
 
-void flipDigit(string& cc)
+CrdCard getCardType(short ran)
 {
-    cout << endl;
-    // flip a randomly chosen char in the string and flip it with the next char
-    // ex OG CC:       6478301126991215
-    // CC:             6478031126991215
-
-    short randIdx = rand() % cc.size();
-    char temp = cc[randIdx + 1];
-    cout << "OG CC:\t\t" << cc << endl;
-    
-    cc[randIdx + 1] = cc[randIdx];
-    cc[randIdx] = temp;
-    cout << "CC:\t\t" << cc << endl;
+    switch (ran)
+    {
+        case 0:
+            return AMERICAN_EXPRESS;
+        case 1:
+            return DISCOVER;
+        case 2:
+            return MASTER_CARD;
+        case 3:
+            return VISA;
+    }
 }
