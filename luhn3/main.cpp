@@ -9,6 +9,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -24,8 +25,9 @@ short luhn(string, short, ofstream&);
 string genCC(CrdCard, short&, ofstream&);
 short charToNumber(char);
 void transpose(string&, ofstream&);
-bool validCC(short, short, int&, int&, ofstream&);
+bool validCC(short, short, short, int&, int&, ofstream&);
 CrdCard getCardType(short);
+void flipDigit(string& cc, ofstream& out);
 
 int main(int argc, char** argv)
 {
@@ -34,6 +36,7 @@ int main(int argc, char** argv)
     srand(static_cast<unsigned int>(time(0)));
     int valids = 0;
     int invalids = 0;
+    cout << "This program will transpose 2 digits and flip 2 digits." << endl;
     cout << "Starting file output to output.txt . . ." << endl;
         
     for (int i = 0; i < 10000; i++)
@@ -48,15 +51,22 @@ int main(int argc, char** argv)
         transpose(s, out);
         out << "string length: " << s.length() << "\ts= " << s << endl;
         short luhnSecnd = luhn(s, len, out);
-        bool valid = validCC(luhnFirst, luhnSecnd, valids, invalids, out);
+        out << "Start flipping . . ." << endl;
+        // flip first digit
+        flipDigit(s, out);
+        // flip a 2nd digit
+        flipDigit(s, out);
+        short luhnThird = luhn(s, len, out);
+        bool valid = validCC(luhnFirst, luhnSecnd, luhnThird, valids, invalids,
+                out);
         out << (valid ? "true" : "false") << endl;
     }
     // file out
-    out << "\nValids:\t" << valids << endl;
-    out << "Invalids:\t" << invalids << endl;
+    out << left << setw(20) << "\nValids:" << valids << endl;
+    out << left << setw(20) << "Invalids:" << invalids << endl;
     // console out
-    cout << "\nValids:\t" << valids << endl;
-    cout << "Invalids:\t" << invalids << endl;
+    cout << left << setw(20) << "\nValids:" << valids << endl;
+    cout << left << setw(20) << "Invalids:" << invalids << endl;
     out.close();
     cout << "Done! " << endl;
     return 0;
@@ -65,10 +75,10 @@ int main(int argc, char** argv)
 // validate the cc #s by performing the luhn algorithm on the original cc number
 // and the transposed version of the cc number. If the check sums are equal,
 // then the cc number is valid.
-bool validCC(short luhnFirst, short luhnSecnd, int& valids, int& invalids,
-        ofstream& out)
+bool validCC(short luhnFirst, short luhnSecnd, short luhnThird, int& valids,
+        int& invalids, ofstream& out)
 {
-    if (luhnFirst == luhnSecnd)
+    if (luhnFirst == luhnSecnd && luhnFirst == luhnThird)
     {
         valids++;
         out << "Adding to valids. Valids:\t" << valids << endl;
@@ -166,7 +176,7 @@ string genCC(CrdCard c, short& len, ofstream& out)
             break;
     }
     
-    // according to the wikipedia page, prepending a 0 to an odd-length
+    // according to the Wikipedia page, prepending a 0 to an odd-length
     // credit card number will allow the number to be processed from left to
     // right
     if (len % 2 != 0)
@@ -175,15 +185,18 @@ string genCC(CrdCard c, short& len, ofstream& out)
     }
     cc += start;
     
+    // start at the ending-prefix-index and finish generating
+    // the remainder of the cc
     for (int i = start.size(); i < len; i++)
     {
+        // random cc digit 0-9
         short c = rand() % 10;
         cc += static_cast<char>(c + 48);
     }
     return cc;
 }
 
-// returns the checksum or x value
+// returns the checksum, or x value
 short luhn(string number, short len, ofstream& out)
 {
     // the 3rd line that shows the sums
@@ -235,7 +248,7 @@ short luhn(string number, short len, ofstream& out)
     out << "x" << endl;
     short total = 0;
     short checkDigit = -1;
-        // add up the total of the sums
+    // add up the total of the sums
     for (int i = 0; i < len; i++)
     {
         out << result[i] << "\t";
@@ -249,6 +262,18 @@ short luhn(string number, short len, ofstream& out)
     return checkDigit;
 }
 
+void flipDigit(string& cc, ofstream& out)
+{
+    out << endl;
+    // choose a random index that is not part of the prefix
+    // for more accurate results
+    short randIdx = (rand() % cc.size() - 6) + 6;
+    out << left << setw(10) << "randIdx=" << randIdx << endl;
+    out << left << setw(10) << "OG CC:" << cc << endl;
+    cc[randIdx] = static_cast<char>((rand() % 10) + 48);
+    out << left << setw(10) << "NW CC" << cc << endl;
+}
+
 void transpose(string& cc, ofstream& out)
 {
     out << endl;
@@ -256,56 +281,15 @@ void transpose(string& cc, ofstream& out)
     // ex OG CC:       6478301126991215
     // CC:             6478031126991215
 
-    short randIdx = rand() % cc.size();
-    out << "randIdx= " << randIdx << endl;
+    // choose a random index that is not part of the prefix
+    // for more accurate results
+    short randIdx = (rand() % cc.size() - 6) + 6;
+    out << left << setw(10) << "randIdx= " << randIdx << endl;
     char temp = cc[randIdx + 1];
-    out << "OG CC:\t" << cc << endl;
-    
+    out << left << setw(10) << "OG CC:" << cc << endl;
     cc[randIdx + 1] = cc[randIdx];
     cc[randIdx] = temp;
-    out << "CC:\t\t" << cc << endl;
-}
-
-// example: converts a char '1' to a short 1
-short charToNumber(char s)
-{
-    if (s == '1')
-    {
-        return 1;
-    }
-    else if (s == '2')
-    {
-        return 2;
-    }
-    else if (s == '3')
-    {
-        return 3;
-    }
-    else if (s == '4')
-    {
-        return 4;
-    }
-    else if (s == '5')
-    {
-        return 5;
-    }
-    else if (s == '6')
-    {
-        return 6;
-    }
-    else if (s == '7')
-    {
-        return 7;
-    }
-    else if (s == '8')
-    {
-        return 8;
-    }
-    else if (s == '9')
-    {
-        return 9;
-    }
-    return -1;
+    out << left << setw(10) << "NW CC:" << cc << endl;
 }
 
 CrdCard getCardType(short ran)
@@ -321,4 +305,46 @@ CrdCard getCardType(short ran)
         case 3:
             return VISA;
     }
+}
+
+// example: converts a char '1' to a short 1
+short charToNumber(char c)
+{
+    if (c == '1')
+    {
+        return 1;
+    }
+    else if (c == '2')
+    {
+        return 2;
+    }
+    else if (c == '3')
+    {
+        return 3;
+    }
+    else if (c == '4')
+    {
+        return 4;
+    }
+    else if (c == '5')
+    {
+        return 5;
+    }
+    else if (c == '6')
+    {
+        return 6;
+    }
+    else if (c == '7')
+    {
+        return 7;
+    }
+    else if (c == '8')
+    {
+        return 8;
+    }
+    else if (c == '9')
+    {
+        return 9;
+    }
+    return -1;
 }
