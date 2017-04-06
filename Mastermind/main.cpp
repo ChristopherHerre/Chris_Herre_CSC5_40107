@@ -22,6 +22,7 @@ short checkContains(short* solution, short pegs, short val,
 int main(int argc, char** argv) {
     srand(static_cast<unsigned int>(time(0)));
     bool end = false;
+    bool gameOver = false;
     // the solution set will consist of 4 pegs
     const short SOLUTION_PEGS = 4;
     // we have 6 different possible peg colors, or values
@@ -34,8 +35,9 @@ int main(int argc, char** argv) {
     
     initSolution(solution, SOLUTION_PEGS, PEG_TYPES);
     
-    while (true)
+    while (!gameOver)
     {
+        //system("clear");
         cout << "end= " << (end ? "true" : "false") << endl;
         displaySolution(solution, SOLUTION_PEGS, end);
         
@@ -47,6 +49,14 @@ int main(int argc, char** argv) {
         {
             //cout << "END = TRUE" << endl;
             end = true;
+        }
+        else if (guess == '@')
+        {
+            //TODO check
+        }
+        else if (guess == '-')
+        {
+            //TODO delete
         }
         short checkedGuess = checkContains(solution, SOLUTION_PEGS, guess - 48,
                 guessedVals);
@@ -71,7 +81,7 @@ void initSolution(short* solution, short pegs, short pegTypes)
 // prints the 4 value solution
 void displaySolution(short* solution, short pegs, bool end)
 {
-    cout << "\t\t";
+    cout << "\t\tSolution:\n\t\t";
     for (short i = 0; i < pegs; i++)
     {
         cout << (end ? static_cast<char>(solution[i] + 48) : '*') << "  ";
@@ -85,8 +95,10 @@ short checkContains(short* solution, short pegs, short val,
 {
     for (short i = 0; i < pegs; i++)
     {
-        if (find(guessedVals.begin(), guessedVals.end(), val) == guessedVals.end()
-                && solution[i] == val)
+        // check if index i is in the already guessed vector
+        if (find(guessedVals.begin(), guessedVals.end(), i)
+                == guessedVals.end()
+                    && solution[i] == val)
         {
             return i;
         }
