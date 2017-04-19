@@ -1,0 +1,168 @@
+\hypertarget{main_8cpp}{}\section{main.\+cpp File Reference}
+\label{main_8cpp}\index{main.\+cpp@{main.\+cpp}}
+{\ttfamily \#include $<$cstdlib$>$}\\*
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$fstream$>$}\\*
+{\ttfamily \#include $<$iomanip$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include $<$algorithm$>$}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_card}{Card}
+\item 
+struct \hyperlink{struct_player}{Player}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{main_8cpp_a68511a15ca254f43e39a605308837cfc}{bet} (\hyperlink{struct_player}{Player} $\ast$players, \hyperlink{struct_card}{Card} $\ast$deck, short p\+Count)
+\item 
+\hyperlink{struct_card}{Card} $\ast$ \hyperlink{main_8cpp_a0e9a127dfd5cf8ef034f637af810604d}{init\+Deck} ()
+\item 
+void \hyperlink{main_8cpp_a793b65706cf6935aa02125863e6a70d3}{shuffle} (\hyperlink{struct_card}{Card} $\ast$deck)
+\item 
+void \hyperlink{main_8cpp_acc266a55447400f35468258f6865c3ba}{print\+Deck} (\hyperlink{struct_card}{Card} $\ast$deck)
+\item 
+void \hyperlink{main_8cpp_a40e1340ef0fdb2d20c9e8e1f3c3078b6}{deal} (\hyperlink{struct_card}{Card} $\ast$deck, \hyperlink{struct_player}{Player} $\ast$players, vector$<$ short $>$ \&dealt, short p\+Count)
+\item 
+void \hyperlink{main_8cpp_a1d6d7ce30c02b5b6b7f3eee230886c04}{move} (\hyperlink{struct_player}{Player} $\ast$players, \hyperlink{struct_card}{Card} $\ast$deck, vector$<$ short $>$ \&dealt, short p\+Count, short last\+Player)
+\item 
+void \hyperlink{main_8cpp_a6d4ce378d64b080c059631aad1d29773}{hit} (\hyperlink{struct_card}{Card} $\ast$deck, \hyperlink{struct_player}{Player} $\ast$players, short p\+Id, vector$<$ short $>$ \&dealt)
+\item 
+void \hyperlink{main_8cpp_abd012566b2baf6f565bdfe7ce8c4cf59}{avoid\+Dupes} (vector$<$ short $>$ \&dealt, short \&ran1, short \&ran2)
+\item 
+int \hyperlink{main_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const short \hyperlink{main_8cpp_a7062e4234cae5661988edab9f7455d07}{D\+E\+C\+K\+\_\+\+S\+I\+ZE} = 52
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{main.\+cpp@{main.\+cpp}!avoid\+Dupes@{avoid\+Dupes}}
+\index{avoid\+Dupes@{avoid\+Dupes}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{\texorpdfstring{avoid\+Dupes(vector$<$ short $>$ \&dealt, short \&ran1, short \&ran2)}{avoidDupes(vector< short > &dealt, short &ran1, short &ran2)}}]{\setlength{\rightskip}{0pt plus 5cm}void avoid\+Dupes (
+\begin{DoxyParamCaption}
+\item[{vector$<$ short $>$ \&}]{dealt, }
+\item[{short \&}]{ran1, }
+\item[{short \&}]{ran2}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8cpp_abd012566b2baf6f565bdfe7ce8c4cf59}{}\label{main_8cpp_abd012566b2baf6f565bdfe7ce8c4cf59}
+
+
+Definition at line 220 of file main.\+cpp.
+
+\index{main.\+cpp@{main.\+cpp}!bet@{bet}}
+\index{bet@{bet}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{\texorpdfstring{bet(\+Player $\ast$players, Card $\ast$deck, short p\+Count)}{bet(Player *players, Card *deck, short pCount)}}]{\setlength{\rightskip}{0pt plus 5cm}void bet (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{players, }
+\item[{{\bf Card} $\ast$}]{deck, }
+\item[{short}]{p\+Count}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8cpp_a68511a15ca254f43e39a605308837cfc}{}\label{main_8cpp_a68511a15ca254f43e39a605308837cfc}
+
+
+Definition at line 120 of file main.\+cpp.
+
+\index{main.\+cpp@{main.\+cpp}!deal@{deal}}
+\index{deal@{deal}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{\texorpdfstring{deal(\+Card $\ast$deck, Player $\ast$players, vector$<$ short $>$ \&dealt, short p\+Count)}{deal(Card *deck, Player *players, vector< short > &dealt, short pCount)}}]{\setlength{\rightskip}{0pt plus 5cm}void deal (
+\begin{DoxyParamCaption}
+\item[{{\bf Card} $\ast$}]{deck, }
+\item[{{\bf Player} $\ast$}]{players, }
+\item[{vector$<$ short $>$ \&}]{dealt, }
+\item[{short}]{p\+Count}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8cpp_a40e1340ef0fdb2d20c9e8e1f3c3078b6}{}\label{main_8cpp_a40e1340ef0fdb2d20c9e8e1f3c3078b6}
+
+
+Definition at line 181 of file main.\+cpp.
+
+\index{main.\+cpp@{main.\+cpp}!hit@{hit}}
+\index{hit@{hit}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{\texorpdfstring{hit(\+Card $\ast$deck, Player $\ast$players, short p\+Id, vector$<$ short $>$ \&dealt)}{hit(Card *deck, Player *players, short pId, vector< short > &dealt)}}]{\setlength{\rightskip}{0pt plus 5cm}void hit (
+\begin{DoxyParamCaption}
+\item[{{\bf Card} $\ast$}]{deck, }
+\item[{{\bf Player} $\ast$}]{players, }
+\item[{short}]{p\+Id, }
+\item[{vector$<$ short $>$ \&}]{dealt}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8cpp_a6d4ce378d64b080c059631aad1d29773}{}\label{main_8cpp_a6d4ce378d64b080c059631aad1d29773}
+
+
+Definition at line 201 of file main.\+cpp.
+
+\index{main.\+cpp@{main.\+cpp}!init\+Deck@{init\+Deck}}
+\index{init\+Deck@{init\+Deck}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{\texorpdfstring{init\+Deck()}{initDeck()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Card} $\ast$ init\+Deck (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8cpp_a0e9a127dfd5cf8ef034f637af810604d}{}\label{main_8cpp_a0e9a127dfd5cf8ef034f637af810604d}
+
+
+Definition at line 146 of file main.\+cpp.
+
+\index{main.\+cpp@{main.\+cpp}!main@{main}}
+\index{main@{main}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$$\ast$argv)}{main(int argc, char **argv)}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{}\label{main_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}
+
+
+Definition at line 90 of file main.\+cpp.
+
+\index{main.\+cpp@{main.\+cpp}!move@{move}}
+\index{move@{move}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{\texorpdfstring{move(\+Player $\ast$players, Card $\ast$deck, vector$<$ short $>$ \&dealt, short p\+Count, short last\+Player)}{move(Player *players, Card *deck, vector< short > &dealt, short pCount, short lastPlayer)}}]{\setlength{\rightskip}{0pt plus 5cm}void move (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{players, }
+\item[{{\bf Card} $\ast$}]{deck, }
+\item[{vector$<$ short $>$ \&}]{dealt, }
+\item[{short}]{p\+Count, }
+\item[{short}]{last\+Player}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8cpp_a1d6d7ce30c02b5b6b7f3eee230886c04}{}\label{main_8cpp_a1d6d7ce30c02b5b6b7f3eee230886c04}
+
+
+Definition at line 244 of file main.\+cpp.
+
+\index{main.\+cpp@{main.\+cpp}!print\+Deck@{print\+Deck}}
+\index{print\+Deck@{print\+Deck}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{\texorpdfstring{print\+Deck(\+Card $\ast$deck)}{printDeck(Card *deck)}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+Deck (
+\begin{DoxyParamCaption}
+\item[{{\bf Card} $\ast$}]{deck}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8cpp_acc266a55447400f35468258f6865c3ba}{}\label{main_8cpp_acc266a55447400f35468258f6865c3ba}
+
+
+Definition at line 172 of file main.\+cpp.
+
+\index{main.\+cpp@{main.\+cpp}!shuffle@{shuffle}}
+\index{shuffle@{shuffle}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{\texorpdfstring{shuffle(\+Card $\ast$deck)}{shuffle(Card *deck)}}]{\setlength{\rightskip}{0pt plus 5cm}void shuffle (
+\begin{DoxyParamCaption}
+\item[{{\bf Card} $\ast$}]{deck}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8cpp_a793b65706cf6935aa02125863e6a70d3}{}\label{main_8cpp_a793b65706cf6935aa02125863e6a70d3}
+
+
+Definition at line 156 of file main.\+cpp.
+
+
+
+\subsection{Variable Documentation}
+\index{main.\+cpp@{main.\+cpp}!D\+E\+C\+K\+\_\+\+S\+I\+ZE@{D\+E\+C\+K\+\_\+\+S\+I\+ZE}}
+\index{D\+E\+C\+K\+\_\+\+S\+I\+ZE@{D\+E\+C\+K\+\_\+\+S\+I\+ZE}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{\texorpdfstring{D\+E\+C\+K\+\_\+\+S\+I\+ZE}{DECK_SIZE}}]{\setlength{\rightskip}{0pt plus 5cm}const short D\+E\+C\+K\+\_\+\+S\+I\+ZE = 52}\hypertarget{main_8cpp_a7062e4234cae5661988edab9f7455d07}{}\label{main_8cpp_a7062e4234cae5661988edab9f7455d07}
+
+
+Definition at line 88 of file main.\+cpp.
+

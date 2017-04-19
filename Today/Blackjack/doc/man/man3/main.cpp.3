@@ -1,0 +1,116 @@
+.TH "main.cpp" 3 "Wed Apr 19 2017" "Blackjack" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+main.cpp \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <cstdlib>\fP
+.br
+\fC#include <iostream>\fP
+.br
+\fC#include <fstream>\fP
+.br
+\fC#include <iomanip>\fP
+.br
+\fC#include <vector>\fP
+.br
+\fC#include <algorithm>\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBCard\fP"
+.br
+.ti -1c
+.RI "struct \fBPlayer\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBbet\fP (\fBPlayer\fP *players, \fBCard\fP *deck, short pCount)"
+.br
+.ti -1c
+.RI "\fBCard\fP * \fBinitDeck\fP ()"
+.br
+.ti -1c
+.RI "void \fBshuffle\fP (\fBCard\fP *deck)"
+.br
+.ti -1c
+.RI "void \fBprintDeck\fP (\fBCard\fP *deck)"
+.br
+.ti -1c
+.RI "void \fBdeal\fP (\fBCard\fP *deck, \fBPlayer\fP *players, vector< short > &dealt, short pCount)"
+.br
+.ti -1c
+.RI "void \fBmove\fP (\fBPlayer\fP *players, \fBCard\fP *deck, vector< short > &dealt, short pCount, short lastPlayer)"
+.br
+.ti -1c
+.RI "void \fBhit\fP (\fBCard\fP *deck, \fBPlayer\fP *players, short pId, vector< short > &dealt)"
+.br
+.ti -1c
+.RI "void \fBavoidDupes\fP (vector< short > &dealt, short &ran1, short &ran2)"
+.br
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const short \fBDECK_SIZE\fP = 52"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "void avoidDupes (vector< short > & dealt, short & ran1, short & ran2)"
+
+.PP
+Definition at line 220 of file main\&.cpp\&.
+.SS "void bet (\fBPlayer\fP * players, \fBCard\fP * deck, short pCount)"
+
+.PP
+Definition at line 120 of file main\&.cpp\&.
+.SS "void deal (\fBCard\fP * deck, \fBPlayer\fP * players, vector< short > & dealt, short pCount)"
+
+.PP
+Definition at line 181 of file main\&.cpp\&.
+.SS "void hit (\fBCard\fP * deck, \fBPlayer\fP * players, short pId, vector< short > & dealt)"
+
+.PP
+Definition at line 201 of file main\&.cpp\&.
+.SS "\fBCard\fP * initDeck ()"
+
+.PP
+Definition at line 146 of file main\&.cpp\&.
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 90 of file main\&.cpp\&.
+.SS "void move (\fBPlayer\fP * players, \fBCard\fP * deck, vector< short > & dealt, short pCount, short lastPlayer)"
+
+.PP
+Definition at line 244 of file main\&.cpp\&.
+.SS "void printDeck (\fBCard\fP * deck)"
+
+.PP
+Definition at line 172 of file main\&.cpp\&.
+.SS "void shuffle (\fBCard\fP * deck)"
+
+.PP
+Definition at line 156 of file main\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const short DECK_SIZE = 52"
+
+.PP
+Definition at line 88 of file main\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Blackjack from the source code\&.
