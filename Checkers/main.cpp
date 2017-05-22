@@ -46,6 +46,8 @@ void printSymbol(Piece **all, Piece **type);
 void initPieces(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
         Piece **kings, Piece **queens, Piece **all);
 void collectInput(string& input, string& input2);
+void cleanUp(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
+        Piece **kings, Piece **queens, Piece **all, Piece **piece);
 
 const string READ = "newgameCopy.txt";
 const string WRITE = "newgame.txt";
@@ -68,7 +70,6 @@ int main(int argc, char** argv)
     initPieces(pawns, knights, bishops, rooks, kings, queens, all);
     string input, input2;
     fstream game;
-    
     game.open(WRITE, ios::in | ios::out);
     if (game.is_open())
     {
@@ -98,8 +99,6 @@ int main(int argc, char** argv)
                     }
                 }
                 piece[0]->move(all, f, m, input, input2);
-                //delete piece[0];
-                //delete[] piece;
                 f.seekg(0);
                 drawBoard(f, col);
             }
@@ -110,6 +109,13 @@ int main(int argc, char** argv)
             f.close();
         }
     }
+    cleanUp(pawns, knights, bishops, rooks, kings, queens, all, piece);
+    return 0;
+}
+
+void cleanUp(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
+        Piece **kings, Piece **queens, Piece **all, Piece **piece)
+{
     delete piece[0];
     delete[] piece;
     for (short i = 0; i < 16; i++)
@@ -147,7 +153,12 @@ int main(int argc, char** argv)
         delete bishops[i];
     }
     delete[] bishops;
-    return 0;
+    
+    for (short i = 0; i < 32; i++)
+    {
+        delete all[i];
+    }
+    delete[] all;
 }
 
 void collectInput(string& input, string& input2)
