@@ -31,7 +31,7 @@ public:
         string input, string input2);
     virtual vector<string> getAvailPositions() = 0;
 protected:
-    string symbol;
+    string symbol = "J";
     string position;
     vector<string> availPositions;
 };

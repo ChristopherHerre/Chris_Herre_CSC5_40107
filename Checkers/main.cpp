@@ -24,6 +24,17 @@
 #include "Queen.h"
 #include "Piece.h"
 
+/**
+ * IMPORTANT NOTICE
+ * 
+ * If using Windows OS, search for this line and comment it out
+ * 
+ * m[ss.str()] -= 2 + 4 * letter; //comment this out
+ * 
+ * The grid system I created will be messed up otherwise and positions
+ * will be off!
+ */
+
 using namespace std;
 
 void initCoords(map<string, int>& m);
@@ -34,6 +45,7 @@ void refreshBoard();
 void printSymbol(Piece **all, Piece **type);
 void initPieces(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
         Piece **kings, Piece **queens, Piece **all);
+void collectInput(string& input, string& input2);
 
 const string READ = "newgameCopy.txt";
 const string WRITE = "newgame.txt";
@@ -43,6 +55,7 @@ int main(int argc, char** argv)
     map<string, int> m;
     initCoords(m);
     short col = 65;
+    refreshBoard();
     Piece **all = new Piece*[32];
     Piece **pawns = new Piece*[16];
     Piece **knights = new Piece*[4];
@@ -50,9 +63,12 @@ int main(int argc, char** argv)
     Piece **rooks = new Piece*[4];
     Piece **kings = new Piece*[2];
     Piece **queens = new Piece*[2];
+    Piece **piece = new Piece*[1];
     // order is important!
     initPieces(pawns, knights, bishops, rooks, kings, queens, all);
+    string input, input2;
     fstream game;
+    
     game.open(WRITE, ios::in | ios::out);
     if (game.is_open())
     {
@@ -65,24 +81,14 @@ int main(int argc, char** argv)
         game.seekg(0);
         drawBoard(game, col);
         game.close();
-        
-        for (short k = 0; k < 8; k++)
+        while (true)
         {
-            string input, input2;
-            cout << "Enter the coordinates of the piece you wish to move." << endl;
-            cout << "Example: A1-H7." << endl;
-            cout << "input: ";
-            getline(cin, input);
-            cout << "Enter the coordinates of the destination space." << endl;
-            cout << "input: ";
-            getline(cin, input2);
-            system("clear");
-            // generate new board
             fstream f;
+            collectInput(input, input2);
+            // generate new board
             try
             {
                 f.open(WRITE, ios::in | ios::out);
-                Piece **piece = new Piece*[1];
                 for (short i = 0; i < 32; i++)
                 {
                     // if there is a piece at the input pos given
@@ -92,8 +98,8 @@ int main(int argc, char** argv)
                     }
                 }
                 piece[0]->move(all, f, m, input, input2);
-                delete piece[0];
-                delete[] piece;
+                //delete piece[0];
+                //delete[] piece;
                 f.seekg(0);
                 drawBoard(f, col);
             }
@@ -102,46 +108,57 @@ int main(int argc, char** argv)
                 cout << e << endl;
             }
             f.close();
-        
-            refreshBoard();
-            for (short i = 0; i < 16; i++)
-            {
-                delete pawns[i];
-            }
-            delete[] pawns;
-
-            for (short i = 0; i < 4; i++)
-            {
-                delete knights[i];
-            }
-            delete[] knights;
-
-            for (short i = 0; i < 2; i++)
-            {
-                delete kings[i];
-            }
-            delete[] kings;
-
-            for (short i = 0; i < 2; i++)
-            {
-                delete queens[i];
-            }
-            delete[] queens;
-
-            for (short i = 0; i < 4; i++)
-            {
-                delete rooks[i];
-            }
-            delete[] rooks;
-
-            for (short i = 0; i < 4; i++)
-            {
-                delete bishops[i];
-            }
-            delete[] bishops;
         }
     }
+    delete piece[0];
+    delete[] piece;
+    for (short i = 0; i < 16; i++)
+    {
+        delete pawns[i];
+    }
+    delete[] pawns;
+
+    for (short i = 0; i < 4; i++)
+    {
+        delete knights[i];
+    }
+    delete[] knights;
+
+    for (short i = 0; i < 2; i++)
+    {
+        delete kings[i];
+    }
+    delete[] kings;
+
+    for (short i = 0; i < 2; i++)
+    {
+        delete queens[i];
+    }
+    delete[] queens;
+
+    for (short i = 0; i < 4; i++)
+    {
+        delete rooks[i];
+    }
+    delete[] rooks;
+
+    for (short i = 0; i < 4; i++)
+    {
+        delete bishops[i];
+    }
+    delete[] bishops;
     return 0;
+}
+
+void collectInput(string& input, string& input2)
+{
+    cout << "Enter the coordinates of the piece you wish to move." << endl;
+    cout << "Example: A1-H7." << endl;
+    cout << "input: ";
+    getline(cin, input);
+    cout << "Enter the coordinates of the destination space." << endl;
+    cout << "input: ";
+    getline(cin, input2);
 }
 
 void printSymbol(Piece **all, Piece **type, short i, short index, short half)
@@ -279,7 +296,7 @@ void drawBoard(fstream& newGame, short& col)
 }
 
 // Map the coordinates on the grid where the letters should appear for each
-// grid square. A0 = square 1 - H7 = square 64, representing an 8x8 grid.
+// grid square. A0 = square 1, H7 = square 64, representing an 8x8 grid.
 void initCoords(map<string, int>& m)
 {
     for (short letter = 0; letter < 8; letter++)
@@ -289,7 +306,7 @@ void initCoords(map<string, int>& m)
             stringstream ss;
             ss << static_cast<char>(letter + 65) << num;
             m[ss.str()] = 105 + (6 * num) + (204 * letter);
-            m[ss.str()] -= 2 + 4 * letter;
+            //m[ss.str()] -= 2 + 4 * letter; // COMMENT THIS LINE FOR WINDOWS OS
         }
     }
 }
