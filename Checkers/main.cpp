@@ -42,7 +42,7 @@ void drawBoard(fstream& newGame, short& col);
 void drawPieces(fstream& file, map<string, int>& m, Piece **pieces,
         short iters);
 void refreshBoard();
-void printSymbol(Piece **all, Piece **type);
+void printSymbol(Piece **all, Piece **type, short i, short index, short half);
 void initPieces(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
         Piece **kings, Piece **queens, Piece **all);
 void collectInput(string& input, string& input2);
@@ -51,6 +51,31 @@ void cleanUp(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
 
 const string READ = "newgameCopy.txt";
 const string WRITE = "newgame.txt";
+
+template <class T>
+void initPiece(Piece **type, Piece **all, short size)
+{
+    for (short i = 0; i < size; i++)
+    {
+        stringstream ss;
+        ss << (i < size / 2 ? "B" : "G") << (i < size / 2 ? i : i - size / 2);
+        type[i] = new T(ss.str());
+        printSymbol(all, type, i, 0, size / 2);
+    }
+}
+
+template <class T>
+void initPiece(Piece **type, Piece **all, short size, short a, short b,
+        short index)
+{
+    for (short i = 0; i < size; i++)
+    {
+        stringstream ss;
+        ss << (i < size / 2 ? "A" : "H") << (i % (size / 2) == 0 ? a : b);
+        type[i] = new T(ss.str());
+        printSymbol(all, type, i, index, size / 2);
+    }
+}
 
 int main(int argc, char** argv)
 {
@@ -123,37 +148,31 @@ void cleanUp(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
         delete pawns[i];
     }
     delete[] pawns;
-
     for (short i = 0; i < 4; i++)
     {
         delete knights[i];
     }
     delete[] knights;
-
     for (short i = 0; i < 2; i++)
     {
         delete kings[i];
     }
     delete[] kings;
-
     for (short i = 0; i < 2; i++)
     {
         delete queens[i];
     }
     delete[] queens;
-
     for (short i = 0; i < 4; i++)
     {
         delete rooks[i];
     }
     delete[] rooks;
-
     for (short i = 0; i < 4; i++)
     {
         delete bishops[i];
     }
     delete[] bishops;
-    
     for (short i = 0; i < 32; i++)
     {
         delete all[i];
@@ -174,17 +193,17 @@ void collectInput(string& input, string& input2)
 
 void printSymbol(Piece **all, Piece **type, short i, short index, short half)
 {
-    cout << type[i]->getPosition() << " ";
+    //cout << type[i]->getPosition() << " ";
     if (i < half)
     {
         type[i]->setSymbol(toupper(type[i]->getSymbol()[0]));
-        cout << type[i]->getSymbol()[0];
+        //cout << type[i]->getSymbol()[0];
     }
     else
     {
-        cout << type[i]->getSymbol()[0];
+        //cout << type[i]->getSymbol()[0];
     }
-    cout << endl;
+    //cout << endl;
     all[index + i] = type[i];
 }
 
@@ -192,53 +211,17 @@ void printSymbol(Piece **all, Piece **type, short i, short index, short half)
 void initPieces(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
         Piece **kings, Piece **queens, Piece **all)
 {
-    for (short i = 0; i < 16; i++)
-    {
-        stringstream ss;
-        ss << (i < 8 ? "B" : "G") << (i < 8 ? i : i - 8);
-        pawns[i] = new Pawn(ss.str());
-        printSymbol(all, pawns, i, 0, 8);
-    }
-    for (short i = 0; i < 4; i++)
-    {
-        stringstream ss;
-        ss << (i < 2 ? "A" : "H") << (i % 2 == 0 ? 2 : 5);
-        knights[i] = new Knight(ss.str());
-        printSymbol(all, knights, i, 16, 2);
-    }
-    for (short i = 0; i < 4; i++)
-    {
-        stringstream ss;
-        ss << (i < 2 ? "A" : "H") << (i % 2 == 0 ? 1 : 6);
-        bishops[i] = new Bishop(ss.str());
-        printSymbol(all, bishops, i, 16 + 4, 2);
-    }
-    for (short i = 0; i < 4; i++)
-    {
-        stringstream ss;
-        ss << (i < 2 ? "A" : "H") << (i % 2 == 0 ? 0 : 7);
-        rooks[i] = new Rook(ss.str());
-        printSymbol(all, rooks, i, 16 + 4 + 4, 2);
-    }
-    for (short i = 0; i < 2; i++)
-    {
-        stringstream ss;
-        ss << (i < 1 ? "A" : "H") << 3;
-        kings[i] = new King(ss.str());
-        printSymbol(all, kings, i, 16 + 4 + 4 + 4, 1);
-    }
-    for (short i = 0; i < 2; i++)
-    {
-        stringstream ss;
-        ss << (i < 1 ? "A" : "H") << 4;
-        queens[i] = new Queen(ss.str());
-        printSymbol(all, queens, i, 16 + 4 + 4 + 4 + 2, 1);
-    }
-    cout << "---------------" << endl;
+    initPiece<Pawn>(pawns, all, 16);
+    initPiece<Knight>(knights, all, 4, 2, 5, 16);
+    initPiece<Bishop>(bishops, all, 4, 1, 6, 16 + 4);
+    initPiece<Rook>(rooks, all, 4, 0, 7, 16 + 4 + 4);
+    initPiece<King>(kings, all, 2, 3, 3, 16 + 4 + 4 + 4);
+    initPiece<Queen>(queens, all, 2, 4, 4, 16 + 4 + 4 + 4 + 2);
+    /*cout << "---------------" << endl;
     for (short i = 0; i < 32; i++)
     {
         cout << all[i]->getPosition() << " " << all[i]->getSymbol() << endl;
-    }
+    }*/
 }
 
 // rewrite the board from a read-only file containing
