@@ -45,7 +45,7 @@ void refreshBoard();
 void printSymbol(Piece **all, Piece **type, short i, short index, short half);
 void initPieces(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
         Piece **kings, Piece **queens, Piece **all);
-void collectInput(string& input, string& input2);
+void collectInput(string& input, string& input2, Piece **all, Piece **piece);
 void cleanUp(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
         Piece **kings, Piece **queens, Piece **all, Piece **piece);
 
@@ -110,20 +110,23 @@ int main(int argc, char** argv)
         while (true)
         {
             fstream f;
-            collectInput(input, input2);
+            
+            collectInput(input, input2, all, piece);
+            
             // generate new board
             try
             {
                 f.open(WRITE, ios::in | ios::out);
-                for (short i = 0; i < 32; i++)
+                /*for (short i = 0; i < 32; i++)
                 {
                     // if there is a piece at the input pos given
                     if (all[i]->getPosition() == input)
                     {
                         piece[0] = all[i];
                     }
-                }
+                }*/
                 piece[0]->move(all, f, m, input, input2);
+                
                 f.seekg(0);
                 drawBoard(f, col);
             }
@@ -132,7 +135,9 @@ int main(int argc, char** argv)
                 cout << e << endl;
             }
             f.close();
+            
         }
+        
     }
     cleanUp(pawns, knights, bishops, rooks, kings, queens, all, piece);
     return 0;
@@ -180,15 +185,30 @@ void cleanUp(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
     delete[] all;
 }
 
-void collectInput(string& input, string& input2)
+void collectInput(string& input, string& input2, Piece **all, Piece **piece)
 {
     cout << "Enter the coordinates of the piece you wish to move." << endl;
     cout << "Example: A1-H7." << endl;
     cout << "input: ";
     getline(cin, input);
+    for (short i = 0; i < 32; i++)
+    {
+        // if there is a piece at the input pos given
+        if (all[i]->getPosition() == input)
+        {
+            piece[0] = all[i];
+        }
+    }
+    piece[0]->getAvailPositions();
     cout << "Enter the coordinates of the destination space." << endl;
     cout << "input: ";
     getline(cin, input2);
+    if (find(piece[0]->getAvailPositions().begin(),
+            piece[0]->getAvailPositions().end(), input2)
+            != piece[0]->getAvailPositions().end())
+    {
+        
+    }
 }
 
 void printSymbol(Piece **all, Piece **type, short i, short index, short half)
