@@ -29,7 +29,7 @@ public:
     void setSymbol(char symbol);
     void move(Piece **all, fstream& f, map<string, int>& m,
         string input, string input2);
-    virtual vector<string> getAvailPositions() = 0;
+    virtual vector<string> getAvailPositions(Piece **all) = 0;
 protected:
     string symbol;
     string position;

@@ -60,9 +60,11 @@ void Piece::move(Piece **all, fstream& f, map<string, int>& m,
     }
     if (!occ)
     {
+        setPosition(input2);
         f.seekp(m[input2]);
         f.write(this->getSymbol().c_str(), 1);
         f.seekp(m[input]);
         f.write(" ", 1);
     }
+    
 }

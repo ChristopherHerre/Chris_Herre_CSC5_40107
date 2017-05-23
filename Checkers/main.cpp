@@ -15,6 +15,7 @@
 #include <sstream>
 #include <cctype>
 #include <new>
+#include <algorithm>
 
 #include "Pawn.h"
 #include "Knight.h"
@@ -45,7 +46,8 @@ void refreshBoard();
 void printSymbol(Piece **all, Piece **type, short i, short index, short half);
 void initPieces(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
         Piece **kings, Piece **queens, Piece **all);
-void collectInput(string& input, string& input2, Piece **all, Piece **piece);
+void collectInput(string& input, string& input2, Piece **all, Piece **piece,
+        fstream& f, map<string, int>& m, short& col);
 void cleanUp(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
         Piece **kings, Piece **queens, Piece **all, Piece **piece);
 
@@ -110,30 +112,7 @@ int main(int argc, char** argv)
         while (true)
         {
             fstream f;
-            
-            collectInput(input, input2, all, piece);
-            
-            // generate new board
-            try
-            {
-                f.open(WRITE, ios::in | ios::out);
-                /*for (short i = 0; i < 32; i++)
-                {
-                    // if there is a piece at the input pos given
-                    if (all[i]->getPosition() == input)
-                    {
-                        piece[0] = all[i];
-                    }
-                }*/
-                piece[0]->move(all, f, m, input, input2);
-                
-                f.seekg(0);
-                drawBoard(f, col);
-            }
-            catch (string e)
-            {
-                cout << e << endl;
-            }
+            collectInput(input, input2, all, piece, f, m, col);
             f.close();
             
         }
@@ -185,7 +164,8 @@ void cleanUp(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
     delete[] all;
 }
 
-void collectInput(string& input, string& input2, Piece **all, Piece **piece)
+void collectInput(string& input, string& input2, Piece **all, Piece **piece,
+        fstream& f, map<string, int>& m, short& col)
 {
     cout << "Enter the coordinates of the piece you wish to move." << endl;
     cout << "Example: A1-H7." << endl;
@@ -199,15 +179,40 @@ void collectInput(string& input, string& input2, Piece **all, Piece **piece)
             piece[0] = all[i];
         }
     }
-    piece[0]->getAvailPositions();
+    cout << "Available movements: ";
+    vector<string> v = piece[0]->getAvailPositions(all);
+    for (string s : v)
+    {
+        cout << s << "  ";
+    }
+    cout << endl;
     cout << "Enter the coordinates of the destination space." << endl;
     cout << "input: ";
     getline(cin, input2);
-    if (find(piece[0]->getAvailPositions().begin(),
-            piece[0]->getAvailPositions().end(), input2)
-            != piece[0]->getAvailPositions().end())
+    if (find(v.begin(), v.end(), input2) != v.end())
     {
-        
+        try
+        {
+            f.open(WRITE, ios::in | ios::out);
+            piece[0]->move(all, f, m, input, input2);
+            f.seekg(0);
+            drawBoard(f, col);
+        }
+        catch (string e)
+        {
+            cout << e << endl;
+        }
+        catch (bad_alloc)
+        {
+            cout << "Error! Cannot allocate memory!" << endl;
+            exit(1);
+        }
+    }
+    else
+    {
+        cout << "Position you selected not available! Try again." << endl;
+        collectInput(input, input2, all, piece, f, m, col);
+        return;
     }
 }
 
@@ -320,7 +325,7 @@ void initCoords(map<string, int>& m)
             stringstream ss;
             ss << static_cast<char>(letter + 65) << num;
             m[ss.str()] = 105 + (6 * num) + (204 * letter);
-            //m[ss.str()] -= 2 + 4 * letter; // COMMENT THIS LINE FOR WINDOWS OS
+            m[ss.str()] -= 2 + 4 * letter; // COMMENT THIS LINE FOR WINDOWS OS
         }
     }
 }

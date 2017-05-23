@@ -25,7 +25,7 @@ public:
     };
     virtual ~Knight();
     
-    vector<string> getAvailPositions()
+    vector<string> getAvailPositions(Piece **all)
     {
         vector<string> v;
         return v;
