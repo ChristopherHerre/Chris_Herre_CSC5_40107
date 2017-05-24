@@ -70,7 +70,8 @@ void Piece::move(Piece **all, fstream& f, map<string, int>& m,
     }
 }
 
-void Piece::drawPieces(fstream& file, map<string, int>& m, Piece **pieces, short iters)
+void Piece::drawPieces(fstream& file, map<string, int>& m, Piece **pieces,
+        short iters)
 {
     for (short i = 0; i < iters; i++)
     {

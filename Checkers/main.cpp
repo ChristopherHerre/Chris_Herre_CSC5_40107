@@ -167,6 +167,7 @@ void collectInput(string& input, string& input2, Piece **all, Piece **piece,
     cout << "Example: A1-H7." << endl;
     cout << "input: ";
     getline(cin, input);
+    
     for (short i = 0; i < 32; i++)
     {
         // if there is a piece at the input pos given

@@ -45,14 +45,17 @@ public:
             ss4 << static_cast<char>(position[0] + 1)
                     << static_cast<char>(position[1]);
             v.push_back(ss4.str());
-            // on pawns first move, it can move two spaces straight
-            if (position[0] == 'B')
+            if (!isOcc(all, ss4.str()))
             {
-                // straight South x2
-                stringstream ss4;
-                ss4 << static_cast<char>(position[0] + 2)
-                        << static_cast<char>(position[1]);
-                v.push_back(ss4.str());
+                // on pawns first move, it can move two spaces straight
+                if (position[0] == 'B')
+                {
+                    // straight South x2
+                    stringstream ss4;
+                    ss4 << static_cast<char>(position[0] + 2)
+                            << static_cast<char>(position[1]);
+                    v.push_back(ss4.str());
+                }
             }
         }
         // handle lowercase side movements
@@ -73,14 +76,17 @@ public:
             ss5 << static_cast<char>(position[0] - 1)
                     << static_cast<char>(position[1]);
             v.push_back(ss5.str());
-            // on pawns first move, it can move two spaces straight
-            if (position[0] == 'G')
+            if (!isOcc(all, ss5.str()))
             {
-                // straight North x2
-                stringstream ss5;
-                ss5 << static_cast<char>(position[0] - 2)
-                        << static_cast<char>(position[1]);
-                v.push_back(ss5.str());
+                // on pawns first move, it can move two spaces straight
+                if (position[0] == 'G')
+                {
+                    // straight North x2
+                    stringstream ss5;
+                    ss5 << static_cast<char>(position[0] - 2)
+                            << static_cast<char>(position[1]);
+                    v.push_back(ss5.str());
+                }
             }
         }
 
