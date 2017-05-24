@@ -93,7 +93,6 @@ int main(int argc, char** argv)
     Piece **kings = new Piece*[2];
     Piece **queens = new Piece*[2];
     Piece **piece = new Piece*[1];
-    // order is important!
     initPieces(pawns, knights, bishops, rooks, kings, queens, all);
     string input, input2;
     fstream game;
@@ -114,9 +113,7 @@ int main(int argc, char** argv)
             fstream f;
             collectInput(input, input2, all, piece, f, m, col);
             f.close();
-            
         }
-        
     }
     cleanUp(pawns, knights, bishops, rooks, kings, queens, all, piece);
     return 0;
@@ -167,6 +164,7 @@ void cleanUp(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
 void collectInput(string& input, string& input2, Piece **all, Piece **piece,
         fstream& f, map<string, int>& m, short& col)
 {
+    const string err = "Position you selected not available! Try again.";
     cout << "Enter the coordinates of the piece you wish to move." << endl;
     cout << "Example: A1-H7." << endl;
     cout << "input: ";
@@ -179,13 +177,31 @@ void collectInput(string& input, string& input2, Piece **all, Piece **piece,
             piece[0] = all[i];
         }
     }
-    cout << "Available movements: ";
     vector<string> v = piece[0]->getAvailPositions(all);
+    if (v.size() < 1)
+    {
+        cout << err << endl;
+        collectInput(input, input2, all, piece, f, m, col);
+        return;
+    }
+    f.open(WRITE, ios::in | ios::out);
+    cout << "Available movements: ";
     for (string s : v)
     {
+        f.seekp(m[s]);
+        f.write("*", 1);
         cout << s << "  ";
     }
     cout << endl;
+    f.seekg(0);
+    //cout << "tellg3=" << f.tellg() << endl;
+    drawBoard(f, col);
+    for (string s : v)
+    {
+        f.seekp(m[s]);
+        f.write(" ", 1);
+    }
+    //cout << "tellg2=" << f.tellg() << endl;
     cout << "Enter the coordinates of the destination space." << endl;
     cout << "input: ";
     getline(cin, input2);
@@ -193,9 +209,10 @@ void collectInput(string& input, string& input2, Piece **all, Piece **piece,
     {
         try
         {
-            f.open(WRITE, ios::in | ios::out);
+            
             piece[0]->move(all, f, m, input, input2);
             f.seekg(0);
+            //cout << "tellg=" << f.tellg() << endl;
             drawBoard(f, col);
         }
         catch (string e)
@@ -210,7 +227,7 @@ void collectInput(string& input, string& input2, Piece **all, Piece **piece,
     }
     else
     {
-        cout << "Position you selected not available! Try again." << endl;
+        cout << err << endl;
         collectInput(input, input2, all, piece, f, m, col);
         return;
     }
@@ -279,39 +296,47 @@ void drawPieces(fstream& file, map<string, int>& m, Piece **pieces, short iters)
 
 void drawBoard(fstream& newGame, short& col)
 {
-    string line;
-    for (short j = 0; getline(newGame, line); j++)
+    try
     {
-        cout << left;
-        if (j % 4 == 2)
+        string line;
+        for (short j = 0; getline(newGame, line); j++)
         {
-            cout << setw(5) << static_cast<char>(col++);
-        }
-        else
-        {
-            cout << setw(5) << " ";
-        }
-        for (short i = 0; i < line.length(); i++)
-        {
-            char c = line.at(i);
-            if (c == 'B')
+            cout << left;
+            if (j % 4 == 2)
             {
-                //m["B" + j] = line.find('B', start + 1);
-                //start += line.find('B', start);
-
-                //out << line.find('B', start) << "\t" << endl;
+                cout << setw(5) << static_cast<char>(col++);
             }
-            cout << c;
+            else
+            {
+                cout << setw(5) << " ";
+            }
+            for (short i = 0; i < line.length(); i++)
+            {
+                char c = line.at(i);
+                if (c == 'B')
+                {
+                    //m["B" + j] = line.find('B', start + 1);
+                    //start += line.find('B', start);
+
+                    //out << line.find('B', start) << "\t" << endl;
+                }
+                cout << c;
+            }
+            cout << endl;
+        }
+        cout << left << setw(5) << "";
+        for (int k = 0; k < 8; k++)
+        {
+            cout << "   " << k << "  "; 
         }
         cout << endl;
+        col = 65;
+        newGame.clear();// handle EOF
     }
-    cout << left << setw(5) << "";
-    for (int k = 0; k < 8; k++)
+    catch (string e)
     {
-        cout << "   " << k << "  "; 
+        cout << e << endl;
     }
-    cout << endl;
-    col = 65;
 }
 
 // Map the coordinates on the grid where the letters should appear for each

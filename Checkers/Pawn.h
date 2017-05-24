@@ -41,9 +41,31 @@ public:
         ss3 << static_cast<char>(position[0])
                 << static_cast<char>(position[1] - 1);
         v.push_back(ss3.str());
+        // remove elements containing invalid chars
+        /*for (string s : v)
+        {
+            cout << "sssss " << s << " ";
+            cout << s.find_first_not_of(valids) << endl;
+            if (s.find_first_not_of(valids) > -1)
+            {
+                cout << find(v.begin(), v.end(), s) << " "
+                       << v.at(find(v.begin(), v.end(), s)) << endl;
+                swap(v.at(find(v.begin(), v.end(), s)), v.back());
+                v.pop_back();
+            }
+        }*/
+        // Remove occupied positions from the available positions
         for (short i = 0; i < 32; i++)
         {
-            if (all[i]->getPosition() == v[0])
+            for (short j = 0; j < v.size(); j++)
+            {
+                if (all[i]->getPosition() == v[j])
+                {
+                    swap(v[j], v.back());
+                    v.pop_back();
+                }
+            }
+            /*if (all[i]->getPosition() == v[0])
             {
                 swap(v[0], v.back());
                 v.pop_back();
@@ -62,7 +84,7 @@ public:
             {
                 swap(v[3], v.back());
                 v.pop_back();
-            }
+            }*/
         }
         return v;
     }

@@ -66,5 +66,9 @@ void Piece::move(Piece **all, fstream& f, map<string, int>& m,
         f.seekp(m[input]);
         f.write(" ", 1);
     }
-    
 }
+
+char Piece::valids[16] = {
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
+    '0', '1', '2', '3', '4', '5', '6', '7'
+ };

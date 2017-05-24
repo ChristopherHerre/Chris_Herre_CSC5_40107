@@ -15,6 +15,7 @@
 #include <map>
 #include <fstream>
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -30,6 +31,7 @@ public:
     void move(Piece **all, fstream& f, map<string, int>& m,
         string input, string input2);
     virtual vector<string> getAvailPositions(Piece **all) = 0;
+    static char valids[16];
 protected:
     string symbol;
     string position;
