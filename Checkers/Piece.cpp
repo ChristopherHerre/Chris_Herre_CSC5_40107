@@ -49,15 +49,6 @@ void Piece::move(Piece **all, fstream& f, map<string, int>& m,
         string input, string input2)
 {
     bool occ = false;
-    for (short i = 0; i < 32; i++)
-    {
-        if (all[i]->getPosition() == input2)
-        {
-            cout << input2 << " is occupied!" << endl;
-            occ = true;
-            break;
-        }
-    }
     if (!occ)
     {
         setPosition(input2);
@@ -65,6 +56,15 @@ void Piece::move(Piece **all, fstream& f, map<string, int>& m,
         f.write(this->getSymbol().c_str(), 1);
         f.seekp(m[input]);
         f.write(" ", 1);
+        // capture
+        /*for (short i = 0; i < 32; i++)
+        {
+            if (all[i]->getPosition() == input2)
+            {
+                all[i]->setPosition("");
+                break;
+            }
+        }*/
         // redraw all pieces on the board
         drawPieces(f, m, all, 32);
     }

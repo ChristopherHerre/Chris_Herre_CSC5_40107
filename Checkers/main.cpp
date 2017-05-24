@@ -186,6 +186,7 @@ void collectInput(string& input, string& input2, Piece **all, Piece **piece,
     f.open(WRITE, ios::in | ios::out);
     cout << "Available movements: ";
     updateHints(f, v, m, "*", true);// print each string in v
+    Piece::drawPieces(f, m, all, 32);
     cout << endl;
     f.seekg(0);
     if (f.tellg() < 0)
