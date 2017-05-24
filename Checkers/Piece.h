@@ -30,6 +30,8 @@ public:
     void setSymbol(char symbol);
     void move(Piece **all, fstream& f, map<string, int>& m,
         string input, string input2);
+    void removeOccs(vector<string> v, Piece **all);
+    bool isOcc(Piece **all, string s);
     virtual vector<string> getAvailPositions(Piece **all) = 0;
     static char valids[16];
 protected:

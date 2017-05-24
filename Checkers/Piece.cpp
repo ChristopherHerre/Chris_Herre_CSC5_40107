@@ -68,6 +68,34 @@ void Piece::move(Piece **all, fstream& f, map<string, int>& m,
     }
 }
 
+// removes occupied positions from a vector of considered moves
+void Piece::removeOccs(vector<string> v, Piece **all)
+{
+    for (short i = 0; i < 32; i++)
+    {
+        for (short j = 0; j < v.size(); j++)
+        {
+            if (all[i]->getPosition() == v[j])
+            {
+                swap(v[j], v.back());
+                v.pop_back();
+            }
+        }
+    }    
+}
+
+bool Piece::isOcc(Piece **all, string s)
+{
+    for (short i = 0; i < 32; i++)
+    {
+        if (all[i]->getPosition() == s)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 char Piece::valids[16] = {
     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
     '0', '1', '2', '3', '4', '5', '6', '7'

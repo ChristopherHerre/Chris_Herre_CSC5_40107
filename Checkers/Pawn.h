@@ -27,65 +27,55 @@ public:
     vector<string> getAvailPositions(Piece **all)
     {
         vector<string> v;
+        // diag
         stringstream ss;
-        ss << static_cast<char>(position[0] + 1) << position[1];
+        ss << static_cast<char>(position[0] + 1)
+                << static_cast<char>(position[1] - 1);
         v.push_back(ss.str());
+        // diag
         stringstream ss1;
-        ss1 << static_cast<char>(position[0] - 1) << position[1];
+        ss1 << static_cast<char>(position[0] - 1)
+                << static_cast<char>(position[1] - 1);
         v.push_back(ss1.str());
+        // diag
         stringstream ss2;
-        ss2 << static_cast<char>(position[0])
+        ss2 << static_cast<char>(position[0] - 1)
                 << static_cast<char>(position[1] + 1);
         v.push_back(ss2.str());
+        // diag
         stringstream ss3;
-        ss3 << static_cast<char>(position[0])
-                << static_cast<char>(position[1] - 1);
+        ss3 << static_cast<char>(position[0] + 1)
+                << static_cast<char>(position[1] + 1);
         v.push_back(ss3.str());
+        stringstream ss4;
+        ss4 << static_cast<char>(position[0] + 1)
+                << static_cast<char>(position[1]);
+        if (isOcc(all, ss4.str()))
+        {
+            v.push_back(ss4.str());
+        }
+        stringstream ss5;
+        ss5 << static_cast<char>(position[0] - 1)
+                << static_cast<char>(position[1]);
+        if (isOcc(all, ss4.str()))
+        {
+            v.push_back(ss5.str());
+        }
         // remove elements containing invalid chars
         /*for (string s : v)
         {
-            cout << "sssss " << s << " ";
+            //cout << "sssss " << s << " ";
             cout << s.find_first_not_of(valids) << endl;
             if (s.find_first_not_of(valids) > -1)
             {
-                cout << find(v.begin(), v.end(), s) << " "
-                       << v.at(find(v.begin(), v.end(), s)) << endl;
+                //cout << find(v.begin(), v.end(), s) << " "
+                //       << v.at(find(v.begin(), v.end(), s)) << endl;
                 swap(v.at(find(v.begin(), v.end(), s)), v.back());
                 v.pop_back();
             }
         }*/
         // Remove occupied positions from the available positions
-        for (short i = 0; i < 32; i++)
-        {
-            for (short j = 0; j < v.size(); j++)
-            {
-                if (all[i]->getPosition() == v[j])
-                {
-                    swap(v[j], v.back());
-                    v.pop_back();
-                }
-            }
-            /*if (all[i]->getPosition() == v[0])
-            {
-                swap(v[0], v.back());
-                v.pop_back();
-            }
-            else if (all[i]->getPosition() == v[1])
-            {
-                swap(v[1], v.back());
-                v.pop_back();
-            }
-            else if (all[i]->getPosition() == v[2])
-            {
-                swap(v[2], v.back());
-                v.pop_back();
-            }
-            else if (all[i]->getPosition() == v[3])
-            {
-                swap(v[3], v.back());
-                v.pop_back();
-            }*/
-        }
+        removeOccs(v, all);
         return v;
     }
 private:

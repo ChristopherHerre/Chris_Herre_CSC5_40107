@@ -34,6 +34,8 @@
  * 
  * The grid system I created will be messed up otherwise and positions
  * will be off!
+ * 
+ * This is because of different encodings on Linux and Windows
  */
 
 using namespace std;
@@ -50,6 +52,8 @@ void collectInput(string& input, string& input2, Piece **all, Piece **piece,
         fstream& f, map<string, int>& m, short& col);
 void cleanUp(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
         Piece **kings, Piece **queens, Piece **all, Piece **piece);
+void updateHints(fstream& f, vector<string>& v, map<string, int> m, string val,
+        bool print);
 
 const string READ = "newgameCopy.txt";
 const string WRITE = "newgame.txt";
@@ -180,56 +184,52 @@ void collectInput(string& input, string& input2, Piece **all, Piece **piece,
     vector<string> v = piece[0]->getAvailPositions(all);
     if (v.size() < 1)
     {
+        f.seekg(0);
         cout << err << endl;
         collectInput(input, input2, all, piece, f, m, col);
         return;
     }
     f.open(WRITE, ios::in | ios::out);
     cout << "Available movements: ";
-    for (string s : v)
-    {
-        f.seekp(m[s]);
-        f.write("*", 1);
-        cout << s << "  ";
-    }
+    updateHints(f, v, m, "*", true);// print each string in v
     cout << endl;
     f.seekg(0);
-    //cout << "tellg3=" << f.tellg() << endl;
-    drawBoard(f, col);
-    for (string s : v)
+    if (f.tellg() < 0)
     {
-        f.seekp(m[s]);
-        f.write(" ", 1);
+        cout << "ERROR DETECTED! It might fix itself next turn." << endl;
+        cout << "You probably specified a position that was\nunavailable? "
+                "Continue the game and follow the prompt\nif possible."
+                << endl;
     }
-    //cout << "tellg2=" << f.tellg() << endl;
+    drawBoard(f, col);
+    updateHints(f, v, m, " ", false);
     cout << "Enter the coordinates of the destination space." << endl;
     cout << "input: ";
     getline(cin, input2);
     if (find(v.begin(), v.end(), input2) != v.end())
     {
-        try
-        {
-            
-            piece[0]->move(all, f, m, input, input2);
-            f.seekg(0);
-            //cout << "tellg=" << f.tellg() << endl;
-            drawBoard(f, col);
-        }
-        catch (string e)
-        {
-            cout << e << endl;
-        }
-        catch (bad_alloc)
-        {
-            cout << "Error! Cannot allocate memory!" << endl;
-            exit(1);
-        }
+        piece[0]->move(all, f, m, input, input2);
+        f.seekg(0);
+        drawBoard(f, col);
     }
     else
     {
+        updateHints(f, v, m, " ", false);
         cout << err << endl;
         collectInput(input, input2, all, piece, f, m, col);
         return;
+    }
+}
+
+void updateHints(fstream& f, vector<string>& v, map<string, int> m, string val,
+        bool print)
+{
+    for (string s : v)
+    {
+        f.seekp(m[s]);
+        f.write(val.c_str(), 1);
+        if (print)
+            cout << s << "  ";
     }
 }
 
