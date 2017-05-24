@@ -32,6 +32,8 @@ public:
         string input, string input2);
     void removeOccs(vector<string> v, Piece **all);
     bool isOcc(Piece **all, string s);
+    static void drawPieces(fstream& file, map<string, int>& m, Piece **pieces,
+        short iters);
     virtual vector<string> getAvailPositions(Piece **all) = 0;
     static char valids[16];
 protected:

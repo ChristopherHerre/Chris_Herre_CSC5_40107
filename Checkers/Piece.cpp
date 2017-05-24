@@ -65,6 +65,17 @@ void Piece::move(Piece **all, fstream& f, map<string, int>& m,
         f.write(this->getSymbol().c_str(), 1);
         f.seekp(m[input]);
         f.write(" ", 1);
+        // redraw all pieces on the board
+        drawPieces(f, m, all, 32);
+    }
+}
+
+void Piece::drawPieces(fstream& file, map<string, int>& m, Piece **pieces, short iters)
+{
+    for (short i = 0; i < iters; i++)
+    {
+        file.seekp(m[pieces[i]->getPosition()]);
+        file.write(pieces[i]->getSymbol().c_str(), 1);
     }
 }
 

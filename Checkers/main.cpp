@@ -42,8 +42,6 @@ using namespace std;
 
 void initCoords(map<string, int>& m);
 void drawBoard(fstream& newGame, short& col);
-void drawPieces(fstream& file, map<string, int>& m, Piece **pieces,
-        short iters);
 void refreshBoard();
 void printSymbol(Piece **all, Piece **type, short i, short index, short half);
 void initPieces(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
@@ -103,12 +101,8 @@ int main(int argc, char** argv)
     game.open(WRITE, ios::in | ios::out);
     if (game.is_open())
     {
-        drawPieces(game, m, pawns, 16);
-        drawPieces(game, m, knights, 4);
-        drawPieces(game, m, bishops, 4);
-        drawPieces(game, m, rooks, 4);
-        drawPieces(game, m, kings, 2);
-        drawPieces(game, m, queens, 2);
+        // for the first time, draw pieces onto the board
+        Piece::drawPieces(game, m, all, 32);
         game.seekg(0);
         drawBoard(game, col);
         game.close();
@@ -285,15 +279,6 @@ void refreshBoard()
     newGame.close();
 }
 
-void drawPieces(fstream& file, map<string, int>& m, Piece **pieces, short iters)
-{
-    for (short i = 0; i < iters; i++)
-    {
-        file.seekp(m[pieces[i]->getPosition()]);
-        file.write(pieces[i]->getSymbol().c_str(), 1);
-    }
-}
-
 void drawBoard(fstream& newGame, short& col)
 {
     try
@@ -350,7 +335,7 @@ void initCoords(map<string, int>& m)
             stringstream ss;
             ss << static_cast<char>(letter + 65) << num;
             m[ss.str()] = 105 + (6 * num) + (204 * letter);
-            m[ss.str()] -= 2 + 4 * letter; // COMMENT THIS LINE FOR WINDOWS OS
+            //m[ss.str()] -= 2 + 4 * letter; // COMMENT THIS LINE FOR WINDOWS OS
         }
     }
 }

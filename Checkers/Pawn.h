@@ -27,40 +27,61 @@ public:
     vector<string> getAvailPositions(Piece **all)
     {
         vector<string> v;
-        // diag
         stringstream ss;
-        ss << static_cast<char>(position[0] + 1)
-                << static_cast<char>(position[1] - 1);
-        v.push_back(ss.str());
-        // diag
-        stringstream ss1;
-        ss1 << static_cast<char>(position[0] - 1)
-                << static_cast<char>(position[1] - 1);
-        v.push_back(ss1.str());
-        // diag
-        stringstream ss2;
-        ss2 << static_cast<char>(position[0] - 1)
-                << static_cast<char>(position[1] + 1);
-        v.push_back(ss2.str());
-        // diag
-        stringstream ss3;
-        ss3 << static_cast<char>(position[0] + 1)
-                << static_cast<char>(position[1] + 1);
-        v.push_back(ss3.str());
-        stringstream ss4;
-        ss4 << static_cast<char>(position[0] + 1)
-                << static_cast<char>(position[1]);
-        if (isOcc(all, ss4.str()))
+        // handle uppercase side movements
+        if (!islower(this->symbol[0]))
         {
+            // SW diag
+            ss << static_cast<char>(position[0] + 1)
+                    << static_cast<char>(position[1] - 1);
+            v.push_back(ss.str());
+            // SE diag
+            stringstream ss3;
+            ss3 << static_cast<char>(position[0] + 1)
+                    << static_cast<char>(position[1] + 1);
+            v.push_back(ss3.str());
+            // straight South
+            stringstream ss4;
+            ss4 << static_cast<char>(position[0] + 1)
+                    << static_cast<char>(position[1]);
             v.push_back(ss4.str());
+            if (position[0] == 'B')
+            {
+                // straight South x2
+                stringstream ss4;
+                ss4 << static_cast<char>(position[0] + 2)
+                        << static_cast<char>(position[1]);
+                v.push_back(ss4.str());
+            }
         }
-        stringstream ss5;
-        ss5 << static_cast<char>(position[0] - 1)
-                << static_cast<char>(position[1]);
-        if (isOcc(all, ss4.str()))
+        // handle lowercase side movements
+        if (islower(this->symbol[0]))
         {
+            // NW diag
+            stringstream ss1;
+            ss1 << static_cast<char>(position[0] - 1)
+                    << static_cast<char>(position[1] - 1);
+            v.push_back(ss1.str());
+            // NE diag
+            stringstream ss2;
+            ss2 << static_cast<char>(position[0] - 1)
+                    << static_cast<char>(position[1] + 1);
+            v.push_back(ss2.str());
+            // straight North
+            stringstream ss5;
+            ss5 << static_cast<char>(position[0] - 1)
+                    << static_cast<char>(position[1]);
             v.push_back(ss5.str());
+            if (position[0] == 'G')
+            {
+                // straight North x2
+                stringstream ss5;
+                ss5 << static_cast<char>(position[0] - 2)
+                        << static_cast<char>(position[1]);
+                v.push_back(ss5.str());
+            }
         }
+
         // remove elements containing invalid chars
         /*for (string s : v)
         {
