@@ -8,20 +8,12 @@
 
 #include "Piece.h"
 
-Piece::Piece()
-{
-    
-}
-
 Piece::Piece(string position)
 {
     this->position = position;
 }
 
-Piece::~Piece()
-{
-    
-}
+Piece::~Piece() { }
 
 string Piece::getSymbol()
 {
@@ -48,26 +40,22 @@ void Piece::setPosition(string position)
 void Piece::move(Piece **all, fstream& f, map<string, int>& m,
         string input, string input2)
 {
-    bool occ = false;
-    if (!occ)
+    f.seekp(m[input2]);
+    f.write(this->getSymbol().c_str(), 1);
+    f.seekp(m[input]);
+    f.write(" ", 1);
+    // capture
+    for (short i = 0; i < 32; i++)
     {
-        setPosition(input2);
-        f.seekp(m[input2]);
-        f.write(this->getSymbol().c_str(), 1);
-        f.seekp(m[input]);
-        f.write(" ", 1);
-        // capture
-        /*for (short i = 0; i < 32; i++)
+        if (all[i]->getPosition() == input2)
         {
-            if (all[i]->getPosition() == input2)
-            {
-                all[i]->setPosition("");
-                break;
-            }
-        }*/
-        // redraw all pieces on the board
-        drawPieces(f, m, all, 32);
+            all[i]->setPosition("CAP");
+            break;
+        }
     }
+    setPosition(input2);
+    // redraw all pieces on the board
+    drawPieces(f, m, all, 32);
 }
 
 void Piece::drawPieces(fstream& file, map<string, int>& m, Piece **pieces,
@@ -75,25 +63,12 @@ void Piece::drawPieces(fstream& file, map<string, int>& m, Piece **pieces,
 {
     for (short i = 0; i < iters; i++)
     {
-        file.seekp(m[pieces[i]->getPosition()]);
-        file.write(pieces[i]->getSymbol().c_str(), 1);
-    }
-}
-
-// removes occupied positions from a vector of considered moves
-void Piece::removeOccs(vector<string> v, Piece **all)
-{
-    for (short i = 0; i < 32; i++)
-    {
-        for (short j = 0; j < v.size(); j++)
+        if (pieces[i]->getPosition() != "CAP")
         {
-            if (all[i]->getPosition() == v[j])
-            {
-                swap(v[j], v.back());
-                v.pop_back();
-            }
+            file.seekp(m[pieces[i]->getPosition()]);
+            file.write(pieces[i]->getSymbol().c_str(), 1);
         }
-    }    
+    }
 }
 
 bool Piece::isOcc(Piece **all, string s)

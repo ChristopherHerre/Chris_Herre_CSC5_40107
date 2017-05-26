@@ -19,9 +19,9 @@
 
 using namespace std;
 
-class Piece {
+class Piece
+{
 public:
-    Piece();
     Piece(string position);
     virtual ~Piece();
     string getPosition();
@@ -30,7 +30,6 @@ public:
     void setSymbol(char symbol);
     void move(Piece **all, fstream& f, map<string, int>& m,
         string input, string input2);
-    void removeOccs(vector<string> v, Piece **all);
     bool isOcc(Piece **all, string s);
     static void drawPieces(fstream& file, map<string, int>& m, Piece **pieces,
         short iters);

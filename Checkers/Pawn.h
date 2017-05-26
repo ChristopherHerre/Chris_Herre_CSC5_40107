@@ -27,19 +27,22 @@ public:
     vector<string> getAvailPositions(Piece **all)
     {
         vector<string> v;
-        stringstream ss;
-        // handle uppercase side movements
-        if (!islower(this->symbol[0]))
+        if (isupper(this->getSymbol()[0]))
         {
+            if (this->getPosition()[0] == 'H')
+                return v;
             // SW diag
+            stringstream ss;
             ss << static_cast<char>(position[0] + 1)
                     << static_cast<char>(position[1] - 1);
-            v.push_back(ss.str());
+            if (isOcc(all, ss.str()))
+                v.push_back(ss.str());
             // SE diag
             stringstream ss3;
             ss3 << static_cast<char>(position[0] + 1)
                     << static_cast<char>(position[1] + 1);
-            v.push_back(ss3.str());
+            if (isOcc(all, ss3.str()))
+                v.push_back(ss3.str());
             // straight South
             stringstream ss4;
             ss4 << static_cast<char>(position[0] + 1)
@@ -56,21 +59,24 @@ public:
                             << static_cast<char>(position[1]);
                     v.push_back(ss4.str());
                 }
-            }
+            }     
         }
-        // handle lowercase side movements
-        if (islower(this->symbol[0]))
+        else if (islower(this->getSymbol()[0]))
         {
+            if (this->getPosition()[0] == 'A')
+                return v;
             // NW diag
             stringstream ss1;
             ss1 << static_cast<char>(position[0] - 1)
                     << static_cast<char>(position[1] - 1);
-            v.push_back(ss1.str());
+            if (isOcc(all, ss1.str()))
+                v.push_back(ss1.str());
             // NE diag
             stringstream ss2;
             ss2 << static_cast<char>(position[0] - 1)
                     << static_cast<char>(position[1] + 1);
-            v.push_back(ss2.str());
+            if (isOcc(all, ss2.str()))
+                v.push_back(ss2.str());
             // straight North
             stringstream ss5;
             ss5 << static_cast<char>(position[0] - 1)
@@ -87,24 +93,8 @@ public:
                             << static_cast<char>(position[1]);
                     v.push_back(ss5.str());
                 }
-            }
+            }   
         }
-
-        // remove elements containing invalid chars
-        /*for (string s : v)
-        {
-            //cout << "sssss " << s << " ";
-            cout << s.find_first_not_of(valids) << endl;
-            if (s.find_first_not_of(valids) > -1)
-            {
-                //cout << find(v.begin(), v.end(), s) << " "
-                //       << v.at(find(v.begin(), v.end(), s)) << endl;
-                swap(v.at(find(v.begin(), v.end(), s)), v.back());
-                v.pop_back();
-            }
-        }*/
-        // Remove occupied positions from the available positions
-        removeOccs(v, all);
         return v;
     }
 private:

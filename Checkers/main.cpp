@@ -167,7 +167,6 @@ void collectInput(string& input, string& input2, Piece **all, Piece **piece,
     cout << "Example: A1-H7." << endl;
     cout << "input: ";
     getline(cin, input);
-    
     for (short i = 0; i < 32; i++)
     {
         // if there is a piece at the input pos given
@@ -187,15 +186,12 @@ void collectInput(string& input, string& input2, Piece **all, Piece **piece,
     f.open(WRITE, ios::in | ios::out);
     cout << "Available movements: ";
     updateHints(f, v, m, "*", true);// print each string in v
-    Piece::drawPieces(f, m, all, 32);
+    //Piece::drawPieces(f, m, all, 32);
     cout << endl;
     f.seekg(0);
     if (f.tellg() < 0)
     {
-        cout << "ERROR DETECTED! It might fix itself next turn." << endl;
-        cout << "You probably specified a position that was\nunavailable? "
-                "Continue the game and follow the prompt\nif possible."
-                << endl;
+        cout << "ERROR DETECTED!" << endl;
     }
     drawBoard(f, col);
     updateHints(f, v, m, " ", false);
@@ -220,12 +216,13 @@ void collectInput(string& input, string& input2, Piece **all, Piece **piece,
 void updateHints(fstream& f, vector<string>& v, map<string, int> m, string val,
         bool print)
 {
+    short index = 0;
     for (string s : v)
     {
         f.seekp(m[s]);
         f.write(val.c_str(), 1);
         if (print)
-            cout << s << "  ";
+            cout << s << (++index % 6 == 0 ? "\n" : "  ");
     }
 }
 
@@ -337,7 +334,8 @@ void initCoords(map<string, int>& m)
             stringstream ss;
             ss << static_cast<char>(letter + 65) << num;
             m[ss.str()] = 105 + (6 * num) + (204 * letter);
-            //m[ss.str()] -= 2 + 4 * letter; // COMMENT THIS LINE FOR WINDOWS OS
+            m[ss.str()] -= 2 + 4 * letter; // COMMENT THIS LINE FOR WINDOWS OS
         }
+        m["CAP"] = 0;
     }
 }
