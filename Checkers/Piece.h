@@ -32,6 +32,7 @@ public:
         string input, string input2);
     static void drawPieces(fstream& file, map<string, int>& m,
         Piece **pieces, short iters);
+    Piece* getPieceForPos(Piece **all, string s);
     virtual vector<string> getAvailPositions(Piece **all) = 0;
 protected:
     string symbol;
@@ -40,7 +41,6 @@ protected:
     static char valids[16];
     void removeInvalids(vector<string>& v);
     void rmvSameSymb(Piece **piece, vector<string>& v);
-    Piece* getPieceForPos(Piece **all, string s);
     bool isOcc(Piece **all, string s);
     bool sameSymb(string s);
 };

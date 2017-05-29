@@ -52,6 +52,7 @@ void cleanUp(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
         Piece **kings, Piece **queens, Piece **all, Piece **piece);
 void updateHints(fstream& f, vector<string>& v, map<string, int> m, string val,
         bool print);
+bool validateInput(string& input);
 
 const string READ = "newgameCopy.txt";
 const string WRITE = "newgame.txt";
@@ -160,29 +161,44 @@ void cleanUp(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
     delete[] all;
 }
 
+bool validateInput(string& input)
+{
+    if (input.size() > 2 || input.size() < 2)
+        return false;
+    if (!isalpha(input[0]) || !isdigit(input[1]))
+        return false;
+    if (islower(input[0]))
+        input[0] = toupper(input[0]);
+    if (input[0] < 65 || input[0] > 72 || input[1] < 48 || input[1] > 55)
+        return false;
+    return true;
+}
+
 void collectInput(string& input, string& input2, Piece **all, Piece **piece,
         fstream& f, map<string, int>& m, short& col)
 {
-    const string err = "Position you selected not available! Try again.";
+    const string err = "ERROR! Position you selected not available! Try again.";
     cout << "Enter the coordinates of the piece you wish to move." << endl;
     cout << "Example: A1-H7." << endl;
     cout << "input: ";
     getline(cin, input);
+    if (!validateInput(input))
+        return;
+    piece[0] = NULL;
     for (short i = 0; i < 32; i++)
     {
         // if there is a piece at the input pos given
         if (all[i]->getPosition() == input)
-        {
             piece[0] = all[i];
-        }
     }
+    if (piece[0] == NULL)
+        return;
     vector<string> v = piece[0]->getAvailPositions(all);
     sort(v.begin(), v.end());
     if (v.size() < 1)
     {
         f.seekg(0);
         cout << err << endl;
-        collectInput(input, input2, all, piece, f, m, col);
         return;
     }
     f.open(WRITE, ios::in | ios::out);
@@ -192,14 +208,14 @@ void collectInput(string& input, string& input2, Piece **all, Piece **piece,
     cout << endl;
     f.seekg(0);
     if (f.tellg() < 0)
-    {
         cout << "ERROR DETECTED!" << endl;
-    }
     drawBoard(f, col);
     updateHints(f, v, m, " ", false);
     cout << "Enter the coordinates of the destination space." << endl;
     cout << "input: ";
     getline(cin, input2);
+    if (!validateInput(input2))
+        return;
     if (find(v.begin(), v.end(), input2) != v.end())
     {
         piece[0]->move(all, f, m, input, input2);
@@ -209,9 +225,9 @@ void collectInput(string& input, string& input2, Piece **all, Piece **piece,
     else
     {
         updateHints(f, v, m, " ", false);
+        f.seekg(0);
+        drawBoard(f, col);
         cout << err << endl;
-        collectInput(input, input2, all, piece, f, m, col);
-        return;
     }
 }
 
