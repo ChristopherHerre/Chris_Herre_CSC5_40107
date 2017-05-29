@@ -106,7 +106,8 @@ int main(int argc, char** argv)
         game.seekg(0);
         drawBoard(game, col);
         game.close();
-        while (true)
+        while (kings[0]->getPosition() != "CAP"
+                && kings[1]->getPosition() != "CAP")
         {
             fstream f;
             collectInput(input, input2, all, piece, f, m, col);
@@ -176,6 +177,7 @@ void collectInput(string& input, string& input2, Piece **all, Piece **piece,
         }
     }
     vector<string> v = piece[0]->getAvailPositions(all);
+    sort(v.begin(), v.end());
     if (v.size() < 1)
     {
         f.seekg(0);
@@ -184,9 +186,9 @@ void collectInput(string& input, string& input2, Piece **all, Piece **piece,
         return;
     }
     f.open(WRITE, ios::in | ios::out);
-    cout << "Available movements: ";
+    cout << "Available movements:\n";
     updateHints(f, v, m, "*", true);// print each string in v
-    //Piece::drawPieces(f, m, all, 32);
+    Piece::drawPieces(f, m, all, 32);
     cout << endl;
     f.seekg(0);
     if (f.tellg() < 0)

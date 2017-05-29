@@ -13,3 +13,9 @@ Pawn::~Pawn()
     
 }
 
+/*void Pawn::move(Piece **all, fstream& f, map<string, int>& m, string input, string input2)
+{
+
+    Piece::move(all, f, m, input, input2);
+    cout << "PAWN MOVE" << endl;
+}*/

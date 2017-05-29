@@ -1,3 +1,1 @@
-build/Debug/GNU-Linux/Piece.o: Piece.cpp Piece.h
-
-Piece.h:
+build/Debug/GNU-Linux/Piece.o: Piece.cpp

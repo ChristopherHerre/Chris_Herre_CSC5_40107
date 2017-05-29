@@ -24,7 +24,7 @@ public:
         this->symbol = "p";
     };
     virtual ~Pawn();
-    vector<string> getAvailPositions(Piece **all)
+    vector<string> getAvailPositions(Piece **all) override
     {
         vector<string> v;
         if (isupper(this->getSymbol()[0]))
@@ -47,17 +47,17 @@ public:
             stringstream ss4;
             ss4 << static_cast<char>(position[0] + 1)
                     << static_cast<char>(position[1]);
-            v.push_back(ss4.str());
             if (!isOcc(all, ss4.str()))
             {
+                v.push_back(ss4.str());
+                // straight South x2
+                stringstream ss7;
+                ss7 << static_cast<char>(position[0] + 2)
+                        << static_cast<char>(position[1]);
                 // on pawns first move, it can move two spaces straight
-                if (position[0] == 'B')
+                if (position[0] == 'B' && !isOcc(all, ss7.str()))
                 {
-                    // straight South x2
-                    stringstream ss4;
-                    ss4 << static_cast<char>(position[0] + 2)
-                            << static_cast<char>(position[1]);
-                    v.push_back(ss4.str());
+                    v.push_back(ss7.str());
                 }
             }     
         }
@@ -81,24 +81,24 @@ public:
             stringstream ss5;
             ss5 << static_cast<char>(position[0] - 1)
                     << static_cast<char>(position[1]);
-            v.push_back(ss5.str());
             if (!isOcc(all, ss5.str()))
             {
+                v.push_back(ss5.str());
+                // straight North x2
+                stringstream ss6;
+                ss6 << static_cast<char>(position[0] - 2)
+                        << static_cast<char>(position[1]);
                 // on pawns first move, it can move two spaces straight
-                if (position[0] == 'G')
+                if (position[0] == 'G' && !isOcc(all, ss6.str()))
                 {
-                    // straight North x2
-                    stringstream ss5;
-                    ss5 << static_cast<char>(position[0] - 2)
-                            << static_cast<char>(position[1]);
-                    v.push_back(ss5.str());
+                    v.push_back(ss6.str());
                 }
             }   
         }
         return v;
     }
 private:
-
+    //Queen queen;
 };
 
 #endif /* PAWN_H */
