@@ -5,6 +5,7 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>Bishop.h</itemPath>
+      <itemPath>Colors.h</itemPath>
       <itemPath>King.h</itemPath>
       <itemPath>Knight.h</itemPath>
       <itemPath>Pawn.h</itemPath>
@@ -58,6 +59,8 @@
       </item>
       <item path="Bishop.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Colors.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="King.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="King.h" ex="false" tool="3" flavor2="0">
@@ -108,6 +111,8 @@
       <item path="Bishop.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Bishop.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Colors.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="King.cpp" ex="false" tool="1" flavor2="0">
       </item>
