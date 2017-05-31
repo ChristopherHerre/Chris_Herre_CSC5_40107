@@ -1,0 +1,256 @@
+.TH "Piece" 3 "Wed May 31 2017" "Chess" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Piece \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Piece\&.h>\fP
+.PP
+Inherited by \fBBishop\fP, \fBKing\fP, \fBKnight\fP, \fBPawn\fP, and \fBRook\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBPiece\fP (string \fBposition\fP)"
+.br
+.ti -1c
+.RI "virtual \fB~Piece\fP ()"
+.br
+.ti -1c
+.RI "string \fBgetPosition\fP ()"
+.br
+.ti -1c
+.RI "void \fBsetPosition\fP (string \fBposition\fP)"
+.br
+.ti -1c
+.RI "string \fBgetSymbol\fP ()"
+.br
+.ti -1c
+.RI "void \fBsetSymbol\fP (char \fBsymbol\fP)"
+.br
+.ti -1c
+.RI "void \fBmove\fP (\fBPiece\fP **all, fstream &f, map< string, int > &m, string input, string input2)"
+.br
+.ti -1c
+.RI "\fBPiece\fP * \fBgetPieceForPos\fP (\fBPiece\fP **all, string s)"
+.br
+.ti -1c
+.RI "virtual vector< string > \fBgetAvailPositions\fP (\fBPiece\fP **all)=0"
+.br
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static void \fBdrawPieces\fP (fstream &file, map< string, int > &m, \fBPiece\fP **pieces, short iters)"
+.br
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBremoveInvalids\fP (vector< string > &v)"
+.br
+.ti -1c
+.RI "void \fBrmvSameSymb\fP (\fBPiece\fP **piece, vector< string > &v)"
+.br
+.ti -1c
+.RI "bool \fBisOcc\fP (\fBPiece\fP **all, string s)"
+.br
+.ti -1c
+.RI "bool \fBsameSymb\fP (string s)"
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "string \fBsymbol\fP"
+.br
+.ti -1c
+.RI "string \fBposition\fP"
+.br
+.ti -1c
+.RI "vector< string > \fBavailPositions\fP"
+.br
+.in -1c
+.SS "Static Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "static char \fBvalids\fP [16]"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 22 of file Piece\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Piece::Piece (string position)"
+Construct a \fBPiece\fP at a given position coordinate\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIposition\fP 
+.RE
+.PP
+
+.PP
+Definition at line 15 of file Piece\&.cpp\&.
+.SS "Piece::~Piece ()\fC [virtual]\fP"
+
+.PP
+Definition at line 20 of file Piece\&.cpp\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "void Piece::drawPieces (fstream & file, map< string, int > & m, \fBPiece\fP ** pieces, short iters)\fC [static]\fP"
+Write a number of Pieces to the game file\&. Ignore if \fBPiece\fP was captured\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfile\fP The game file\&. 
+.br
+\fIm\fP The coordinates map\&. 
+.br
+\fIpieces\fP The Pieces to draw\&. 
+.br
+\fIiters\fP The number of Pieces\&. 
+.RE
+.PP
+
+.PP
+Definition at line 80 of file Piece\&.cpp\&.
+.SS "virtual vector<string> Piece::getAvailPositions (\fBPiece\fP ** all)\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBBishop\fP, \fBQueen\fP, \fBKing\fP, \fBKnight\fP, \fBRook\fP, and \fBPawn\fP\&.
+.SS "\fBPiece\fP * Piece::getPieceForPos (\fBPiece\fP ** all, string s)"
+Gets a \fBPiece\fP given a position\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIall\fP The 32 Pieces\&. 
+.br
+\fIs\fP The position string\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The \fBPiece\fP at the specified position, or NULL\&. 
+.RE
+.PP
+
+.PP
+Definition at line 169 of file Piece\&.cpp\&.
+.SS "string Piece::getPosition ()"
+
+.PP
+Definition at line 34 of file Piece\&.cpp\&.
+.SS "string Piece::getSymbol ()"
+
+.PP
+Definition at line 22 of file Piece\&.cpp\&.
+.SS "bool Piece::isOcc (\fBPiece\fP ** all, string s)\fC [protected]\fP"
+Check if a position is occupied\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIall\fP The 32 Pieces\&. 
+.br
+\fIs\fP The position to check\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if position is occupied\&. False otherwise\&. 
+.RE
+.PP
+
+.PP
+Definition at line 100 of file Piece\&.cpp\&.
+.SS "void Piece::move (\fBPiece\fP ** all, fstream & f, map< string, int > & m, string input, string input2)"
+Change the position of a \fBPiece\fP inside the game file\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIall\fP The 32 Pieces\&. 
+.br
+\fIf\fP The file to write to\&. 
+.br
+\fIm\fP The coordinates map\&. 
+.br
+\fIinput\fP The selected position\&. 
+.br
+\fIinput2\fP The destination position\&. 
+.RE
+.PP
+
+.PP
+Definition at line 52 of file Piece\&.cpp\&.
+.SS "void Piece::removeInvalids (vector< string > & v)\fC [protected]\fP"
+Removes all invalid positions\&. See 'bool invalid(string p)' for details\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIv\fP The vector containing valid and invalid positions\&. 
+.RE
+.PP
+
+.PP
+Definition at line 134 of file Piece\&.cpp\&.
+.SS "void Piece::rmvSameSymb (\fBPiece\fP ** all, vector< string > & v)\fC [protected]\fP"
+Remove positions where our teams pieces are\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIall\fP The 32 Pieces\&. 
+.br
+\fIv\fP The vector containing positions of our team and enemies\&. 
+.RE
+.PP
+
+.PP
+Definition at line 144 of file Piece\&.cpp\&.
+.SS "bool Piece::sameSymb (string s)\fC [protected]\fP"
+
+.SS "void Piece::setPosition (string position)"
+
+.PP
+Definition at line 39 of file Piece\&.cpp\&.
+.SS "void Piece::setSymbol (char symbol)"
+
+.PP
+Definition at line 27 of file Piece\&.cpp\&.
+.SH "Member Data Documentation"
+.PP 
+.SS "vector<string> Piece::availPositions\fC [protected]\fP"
+
+.PP
+Definition at line 40 of file Piece\&.h\&.
+.SS "string Piece::position\fC [protected]\fP"
+
+.PP
+Definition at line 39 of file Piece\&.h\&.
+.SS "string Piece::symbol\fC [protected]\fP"
+
+.PP
+Definition at line 38 of file Piece\&.h\&.
+.SS "char Piece::valids\fC [static]\fP, \fC [protected]\fP"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
+    '0', '1', '2', '3', '4', '5', '6', '7'
+}
+.fi
+Depreciated\&. 
+.PP
+Definition at line 41 of file Piece\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Chess from the source code\&.

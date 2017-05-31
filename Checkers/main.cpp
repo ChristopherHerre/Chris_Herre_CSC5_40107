@@ -143,7 +143,7 @@ int main(int argc, char** argv)
                     << "'s King has been captured!" << RESET << endl;
         }
     }
-    //cleanUp(pawns, knights, bishops, rooks, kings, queens, all, piece);
+    cleanUp(pawns, knights, bishops, rooks, kings, queens, all, piece);
     return 0;
 }
 
@@ -153,7 +153,6 @@ int main(int argc, char** argv)
 void cleanUp(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
         Piece **kings, Piece **queens, Piece **all, Piece **piece)
 {
-    delete piece[0];
     delete[] piece;
     for (short i = 0; i < 16; i++)
     {
@@ -186,10 +185,6 @@ void cleanUp(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
         delete bishops[i];
     }
     delete[] bishops;
-    for (short i = 0; i < 32; i++)
-    {
-        delete all[i];
-    }
     delete[] all;
 }
 
@@ -485,7 +480,7 @@ void initCoords(map<string, int>& m)
             stringstream ss;
             ss << static_cast<char>(letter + 65) << num;
             m[ss.str()] = 105 + (6 * num) + (204 * letter);
-            m[ss.str()] -= 2 + 4 * letter; // COMMENT THIS LINE FOR WINDOWS OS
+            //m[ss.str()] -= 2 + 4 * letter; // COMMENT THIS LINE FOR WINDOWS OS
         }
         // Special value for captured Pieces, not rendered
         m["CAP"] = 0;
