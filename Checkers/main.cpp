@@ -47,6 +47,7 @@ void refreshBoard();
 void printSymbol(Piece **all, Piece **type, short i, short index, short half);
 void initPieces(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
         Piece **kings, Piece **queens, Piece **all);
+bool proceed(Piece **piece, Piece **all, string& input, short& turn);
 void collectInput(string& input, string& input2, Piece **all, Piece **piece,
         fstream& f, map<string, int>& m, short& col, short& turn);
 void cleanUp(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
@@ -55,8 +56,8 @@ void updateHints(fstream& f, vector<string>& v, map<string, int> m, string val,
         bool print);
 bool validateInput(string& input);
 
-const string READ = "newgameCopy.txt";
-const string WRITE = "newgame.txt";
+const string READ = "newgame.txt";
+const string WRITE = "game.txt";
 
 template <class T>
 void initPiece(Piece **type, Piece **all, short size)
@@ -113,21 +114,21 @@ int main(int argc, char** argv)
                 && kings[1]->getPosition() != "CAP")
         {
             fstream f;
-            if (turn++ % 2 == 0)
-            {
-                cout << BLUE << "YOUR TURN " << BOLDMAGENTA << "MAGENTA"
-                        << BLUE << "." << RESET << endl;
-            }
-            else
-            {
-                cout << BLUE << "YOUR TURN " << BOLDCYAN << "CYAN"
-                        BLUE << "." << RESET << endl;
-            }
             collectInput(input, input2, all, piece, f, m, col, turn);
             f.close();
         }
+        if (kings[1]->getPosition() != "CAP")
+        {
+            cout << BOLDMAGENTA << "MAGENTA" << BLUE
+                    << "'s King has been captured!" << RESET << endl;
+        }
+        else if (kings[0]->getPosition() != "CAP")
+        {
+            cout << BOLDCYAN << "CYAN" << BLUE
+                    << "'s King has been captured!" << RESET << endl;
+        }
     }
-    cleanUp(pawns, knights, bishops, rooks, kings, queens, all, piece);
+    //cleanUp(pawns, knights, bishops, rooks, kings, queens, all, piece);
     return 0;
 }
 
@@ -141,11 +142,7 @@ void cleanUp(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
         delete pawns[i];
     }
     delete[] pawns;
-    for (short i = 0; i < 4; i++)
-    {
-        delete knights[i];
-    }
-    delete[] knights;
+
     for (short i = 0; i < 2; i++)
     {
         delete kings[i];
@@ -156,6 +153,11 @@ void cleanUp(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
         delete queens[i];
     }
     delete[] queens;
+    for (short i = 0; i < 4; i++)
+    {
+        delete knights[i];
+    }
+    delete[] knights;
     for (short i = 0; i < 4; i++)
     {
         delete rooks[i];
@@ -176,26 +178,46 @@ void cleanUp(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
 bool validateInput(string& input)
 {
     if (input.size() > 2 || input.size() < 2)
+    {
+        cout << RED << "Input length is invalid!" << RESET << endl;
         return false;
+    }
     if (!isalpha(input[0]) || !isdigit(input[1]))
+    {
+        cout << RED << "Invalid input syntax! Try A1 or G1 for example."
+                << RESET << endl;
         return false;
+    }
     if (islower(input[0]))
+    {
         input[0] = toupper(input[0]);
+    }
     if (input[0] < 65 || input[0] > 72 || input[1] < 48 || input[1] > 55)
+    {
+        cout << RED << "Invalid input range!" << RESET << endl;
         return false;
+    }
     return true;
 }
 
-void collectInput(string& input, string& input2, Piece **all, Piece **piece,
-        fstream& f, map<string, int>& m, short& col, short& turn)
+bool proceed(Piece **piece, Piece **all, string& input, short& turn)
 {
-    const string err = "ERROR! Position you selected not available! Try again.";
+    if (turn % 2 == 0)
+    {
+        cout << BLUE << "YOUR TURN " << BOLDMAGENTA << "MAGENTA"
+                << BLUE << "." << RESET << endl;
+    }
+    else
+    {
+        cout << BLUE << "YOUR TURN " << BOLDCYAN << "CYAN"
+                BLUE << "." << RESET << endl;
+    }
     cout << "Enter the coordinates of the piece you wish to move." << endl;
     cout << "Example: A1-H7." << endl;
     cout << "input: ";
     getline(cin, input);
     if (!validateInput(input))
-        return;
+        return false;
     piece[0] = NULL;
     for (short i = 0; i < 32; i++)
     {
@@ -204,28 +226,36 @@ void collectInput(string& input, string& input2, Piece **all, Piece **piece,
             piece[0] = all[i];
     }
     if (piece[0] == NULL)
-        return;
-    cout << "turn:\t" << turn << endl;
-    if (turn % 2 != 0 && islower(piece[0]->getSymbol()[0]))
+        return false;
+    if (turn % 2 == 0 && islower(piece[0]->getSymbol()[0]))
     {
         cout << "It is " << BOLDMAGENTA << "MAGENTA" << RESET << "'s turn!"
                 << endl;
-        turn -= 1;
-        return;
+        return false;
     }
-    else if (turn % 2 == 0 && isupper(piece[0]->getSymbol()[0]))
+    else if (turn % 2 != 0 && isupper(piece[0]->getSymbol()[0]))
     {
         cout << "It is " << BOLDCYAN << "CYAN" << RESET << "'s turn!"
                 << endl;
-        turn -= 1;
-        return;        
+        return false;        
     }
+    return true;
+}
+
+void collectInput(string& input, string& input2, Piece **all, Piece **piece,
+        fstream& f, map<string, int>& m, short& col, short& turn)
+{
+    const string err = "ERROR! Position you selected not available! Try again.";
+    bool add = true;
+    if (!proceed(piece, all, input, turn))
+        return;
     vector<string> v = piece[0]->getAvailPositions(all);
     sort(v.begin(), v.end());
     if (v.size() < 1)
     {
         f.seekg(0);
-        cout << err << endl;
+        cout << RED << err << RESET << endl;
+        add = false;
         return;
     }
     f.open(WRITE, ios::in | ios::out);
@@ -254,8 +284,11 @@ void collectInput(string& input, string& input2, Piece **all, Piece **piece,
         updateHints(f, v, m, " ", false);
         f.seekg(0);
         drawBoard(f, col);
-        cout << err << endl;
+        cout << RED << err << RESET << endl;
+        add = false;
     }
+    if (add)
+        turn++;
 }
 
 void updateHints(fstream& f, vector<string>& v, map<string, int> m, string val,
@@ -327,7 +360,6 @@ void drawBoard(fstream& newGame, short& col)
             {
                 cout << setw(5) << " ";
             }
-            short cnt = 0;
             for (short i = 0; i < line.length(); i++)
             {
                 char c = line.at(i);
