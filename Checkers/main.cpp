@@ -26,7 +26,7 @@
 #include "Piece.h"
 #include "Colors.h"
 
-/**
+/*
  * IMPORTANT NOTICE
  * 
  * If using Windows OS, search for this line and comment it out
@@ -44,12 +44,14 @@ using namespace std;
 void initCoords(map<string, int>& m);
 void drawBoard(fstream& newGame, short& col);
 void refreshBoard();
-void printSymbol(Piece **all, Piece **type, short i, short index, short half);
+void setAllIndex(Piece **all, Piece **type, short i, short index, short half);
 void initPieces(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
         Piece **kings, Piece **queens, Piece **all);
 bool proceed(Piece **piece, Piece **all, string& input, short& turn);
 void collectInput(string& input, string& input2, Piece **all, Piece **piece,
-        fstream& f, map<string, int>& m, short& col, short& turn);
+        fstream& f, map<string, int>& m, short& col, short& turn,
+        Piece **kings);
+void check4check(Piece **all, Piece **kings);
 void cleanUp(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
         Piece **kings, Piece **queens, Piece **all, Piece **piece);
 void updateHints(fstream& f, vector<string>& v, map<string, int> m, string val,
@@ -59,6 +61,9 @@ bool validateInput(string& input);
 const string READ = "newgame.txt";
 const string WRITE = "game.txt";
 
+/**
+ *  Initialize the Pawns
+ */
 template <class T>
 void initPiece(Piece **type, Piece **all, short size)
 {
@@ -67,10 +72,13 @@ void initPiece(Piece **type, Piece **all, short size)
         stringstream ss;
         ss << (i < size / 2 ? "B" : "G") << (i < size / 2 ? i : i - size / 2);
         type[i] = new T(ss.str());
-        printSymbol(all, type, i, 0, size / 2);
+        setAllIndex(all, type, i, 0, size / 2);
     }
 }
 
+/**
+ *  Initialize the rest of the Pieces
+ */
 template <class T>
 void initPiece(Piece **type, Piece **all, short size, short a, short b,
         short index)
@@ -80,10 +88,17 @@ void initPiece(Piece **type, Piece **all, short size, short a, short b,
         stringstream ss;
         ss << (i < size / 2 ? "A" : "H") << (i % (size / 2) == 0 ? a : b);
         type[i] = new T(ss.str());
-        printSymbol(all, type, i, index, size / 2);
+        setAllIndex(all, type, i, index, size / 2);
     }
 }
 
+/**
+ * Create the coordinate system.
+ * Clear the Board so that it is blank, then initialize Pieces in their
+ * starting positions.
+ * While-loop until a king has been captured, meanwhile collect input.
+ * When a king is captured, display who the loser of the game is.
+ */
 int main(int argc, char** argv)
 {
     map<string, int> m;
@@ -114,7 +129,7 @@ int main(int argc, char** argv)
                 && kings[1]->getPosition() != "CAP")
         {
             fstream f;
-            collectInput(input, input2, all, piece, f, m, col, turn);
+            collectInput(input, input2, all, piece, f, m, col, turn, kings);
             f.close();
         }
         if (kings[1]->getPosition() != "CAP")
@@ -132,6 +147,9 @@ int main(int argc, char** argv)
     return 0;
 }
 
+/**
+ *  Delete and and clean all uses of dynamic memory.
+ */
 void cleanUp(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
         Piece **kings, Piece **queens, Piece **all, Piece **piece)
 {
@@ -175,6 +193,11 @@ void cleanUp(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
     delete[] all;
 }
 
+/**
+ * Make sure the input is in this format, no exceptions:
+ * Letter (A-H) Number 0-8
+ * Example: A0 or H7
+ */
 bool validateInput(string& input)
 {
     if (input.size() > 2 || input.size() < 2)
@@ -200,6 +223,10 @@ bool validateInput(string& input)
     return true;
 }
 
+/**
+ * Collect the first input, that is, the Piece to maneuver. Exit early if
+ * the wrong player is taking a turn.
+ */
 bool proceed(Piece **piece, Piece **all, string& input, short& turn)
 {
     if (turn % 2 == 0)
@@ -242,8 +269,12 @@ bool proceed(Piece **piece, Piece **all, string& input, short& turn)
     return true;
 }
 
+/**
+ * Collect a target Piece to maneuver, then collect a destination square for
+ * that Piece. Update the Board, then process the next player's turn.
+ */
 void collectInput(string& input, string& input2, Piece **all, Piece **piece,
-        fstream& f, map<string, int>& m, short& col, short& turn)
+        fstream& f, map<string, int>& m, short& col, short& turn, Piece **kings)
 {
     const string err = "ERROR! Position you selected not available! Try again.";
     bool add = true;
@@ -287,10 +318,42 @@ void collectInput(string& input, string& input2, Piece **all, Piece **piece,
         cout << RED << err << RESET << endl;
         add = false;
     }
+    check4check(all, kings);
     if (add)
         turn++;
 }
 
+/**
+ * Loop through all Pieces, then all Pieces' availablePositions.
+ * See if a king is in check and print a message if so.
+ */
+void check4check(Piece **all, Piece **kings)
+{
+    for (short i = 0; i < 32; i++)
+    {
+        for (string pos : all[i]->getAvailPositions(all))
+        {
+            if (pos == kings[0]->getPosition())
+            {
+                cout << BOLDMAGENTA << "MAGENTA" << GREEN << " is in Check!"
+                        << RESET << endl;
+                return;
+            }
+            else if (pos == kings[1]->getPosition())
+            {
+                cout << BOLDCYAN << "CYAN" << GREEN << " is in Check!"
+                        << RESET << endl;
+                return;
+            }
+        }
+    }   
+}
+
+/**
+ * Sets or removes in the game file, the hint symbols *.
+ * If print set to true, this will print the available position coordinates
+ * while player is selecting their destination square.
+ */
 void updateHints(fstream& f, vector<string>& v, map<string, int> m, string val,
         bool print)
 {
@@ -304,7 +367,11 @@ void updateHints(fstream& f, vector<string>& v, map<string, int> m, string val,
     }
 }
 
-void printSymbol(Piece **all, Piece **type, short i, short index, short half)
+/**
+ * Sets the index of Piece **all to the correct value of a specific Piece
+ * in a specific Piece array, such as rooks, or pawns for example.
+ */
+void setAllIndex(Piece **all, Piece **type, short i, short index, short half)
 {
     if (i < half)
     {
@@ -313,7 +380,9 @@ void printSymbol(Piece **all, Piece **type, short i, short index, short half)
     all[index + i] = type[i];
 }
 
-// Initialize all pieces in the arrays. Print their symbols onto the board.
+/**
+ * Initialize all pieces in the arrays.
+ */
 void initPieces(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
         Piece **kings, Piece **queens, Piece **all)
 {
@@ -325,8 +394,10 @@ void initPieces(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
     initPiece<Queen>(queens, all, 2, 4, 4, 16 + 4 + 4 + 4 + 2);
 }
 
-// rewrite the board from a read-only file containing
-// the blank map with no pieces
+/**
+ * Rewrite the board from a read-only file containing
+ * the blank map with no pieces.
+ */
 void refreshBoard()
 {
     fstream newGame;
@@ -344,6 +415,10 @@ void refreshBoard()
     newGame.close();
 }
 
+/**
+ * Reads the Board from the game file and prints all characters onto the Board.
+ * Also displays A-H and 0-7 coordinate-system-UI
+ */
 void drawBoard(fstream& newGame, short& col)
 {
     try
@@ -397,8 +472,10 @@ void drawBoard(fstream& newGame, short& col)
     }
 }
 
-// Map the coordinates on the grid where the letters should appear for each
-// grid square. A0 = square 1, H7 = square 64, representing an 8x8 grid.
+/**
+ * Map the coordinates on the grid where the letters should appear for each
+ * grid square. A0 = square 1, H7 = square 64, representing an 8x8 grid.
+ */
 void initCoords(map<string, int>& m)
 {
     for (short letter = 0; letter < 8; letter++)

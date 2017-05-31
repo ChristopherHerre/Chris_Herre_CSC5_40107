@@ -17,6 +17,9 @@
 
 using namespace std;
 
+/**
+ * Inherits the Bishop's movements, as well as the Rook's movements.
+ */
 class Queen : public Bishop
 {
 public:
