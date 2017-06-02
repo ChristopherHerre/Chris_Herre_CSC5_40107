@@ -1,0 +1,274 @@
+\hypertarget{main_8cpp}{}\section{main.\+cpp File Reference}
+\label{main_8cpp}\index{main.\+cpp@{main.\+cpp}}
+{\ttfamily \#include $<$cstdlib$>$}\\*
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$iomanip$>$}\\*
+{\ttfamily \#include $<$fstream$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$map$>$}\\*
+{\ttfamily \#include $<$sstream$>$}\\*
+{\ttfamily \#include $<$cctype$>$}\\*
+{\ttfamily \#include $<$new$>$}\\*
+{\ttfamily \#include $<$algorithm$>$}\\*
+{\ttfamily \#include \char`\"{}Pawn.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Knight.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Bishop.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Rook.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}King.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Queen.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Piece.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Colors.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{main_8cpp_a6444331b153d596d89373aa8d7e0b59d}{init\+Coords} (map$<$ string, int $>$ \&m)
+\item 
+void \hyperlink{main_8cpp_acbb08b4dcc07e59a39127c08b173fcbd}{draw\+Board} (fstream \&new\+Game, short \&col)
+\item 
+void \hyperlink{main_8cpp_a460fb296898806fec6667a62a14676cb}{refresh\+Board} ()
+\item 
+void \hyperlink{main_8cpp_ae34c19d5c237a304314afd5ab91a8a2e}{set\+All\+Index} (\hyperlink{class_piece}{Piece} $\ast$$\ast$all, \hyperlink{class_piece}{Piece} $\ast$$\ast$type, short i, short index, short half)
+\item 
+void \hyperlink{main_8cpp_a7968a1ad5805e21a2719c066ab2bc386}{init\+Pieces} (\hyperlink{class_piece}{Piece} $\ast$$\ast$pawns, \hyperlink{class_piece}{Piece} $\ast$$\ast$knights, \hyperlink{class_piece}{Piece} $\ast$$\ast$bishops, \hyperlink{class_piece}{Piece} $\ast$$\ast$rooks, \hyperlink{class_piece}{Piece} $\ast$$\ast$kings, \hyperlink{class_piece}{Piece} $\ast$$\ast$queens, \hyperlink{class_piece}{Piece} $\ast$$\ast$all)
+\item 
+bool \hyperlink{main_8cpp_aa9694c3d590b73cbaecba769bebee7c5}{proceed} (\hyperlink{class_piece}{Piece} $\ast$$\ast$piece, \hyperlink{class_piece}{Piece} $\ast$$\ast$all, string \&input, short \&turn)
+\item 
+void \hyperlink{main_8cpp_a956389361790fe2c581a4634495acda1}{collect\+Input} (string \&input, string \&input2, \hyperlink{class_piece}{Piece} $\ast$$\ast$all, \hyperlink{class_piece}{Piece} $\ast$$\ast$piece, fstream \&f, map$<$ string, int $>$ \&m, short \&col, short \&turn, \hyperlink{class_piece}{Piece} $\ast$$\ast$kings)
+\item 
+void \hyperlink{main_8cpp_a710cff68311c045ceee4ccc30eae9ca6}{check4check} (\hyperlink{class_piece}{Piece} $\ast$$\ast$all, \hyperlink{class_piece}{Piece} $\ast$$\ast$kings)
+\item 
+void \hyperlink{main_8cpp_a2c0ed726348eabc1d0870f40aa356498}{clean\+Up} (\hyperlink{class_piece}{Piece} $\ast$$\ast$pawns, \hyperlink{class_piece}{Piece} $\ast$$\ast$knights, \hyperlink{class_piece}{Piece} $\ast$$\ast$bishops, \hyperlink{class_piece}{Piece} $\ast$$\ast$rooks, \hyperlink{class_piece}{Piece} $\ast$$\ast$kings, \hyperlink{class_piece}{Piece} $\ast$$\ast$queens, \hyperlink{class_piece}{Piece} $\ast$$\ast$all, \hyperlink{class_piece}{Piece} $\ast$$\ast$piece)
+\item 
+void \hyperlink{main_8cpp_a83634c8b8036d339c72a5fb026c238aa}{update\+Hints} (fstream \&f, vector$<$ string $>$ \&v, map$<$ string, int $>$ m, string val, bool print)
+\item 
+bool \hyperlink{main_8cpp_a908402886673f8a7a5dc4f54e6057602}{validate\+Input} (string \&input)
+\item 
+{\footnotesize template$<$class T $>$ }\\void \hyperlink{main_8cpp_aaed4f7a95c858511e4dc3f56995903b8}{init\+Piece} (\hyperlink{class_piece}{Piece} $\ast$$\ast$type, \hyperlink{class_piece}{Piece} $\ast$$\ast$all, short size)
+\item 
+{\footnotesize template$<$class T $>$ }\\void \hyperlink{main_8cpp_ad485d65fa04c45c00b5205f922ff7182}{init\+Piece} (\hyperlink{class_piece}{Piece} $\ast$$\ast$type, \hyperlink{class_piece}{Piece} $\ast$$\ast$all, short size, short a, short b, short index)
+\item 
+int \hyperlink{main_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const string \hyperlink{main_8cpp_acec89b22d9ab6e6b45e9b90207a51a3b}{R\+E\+AD} = \char`\"{}newgame.\+txt\char`\"{}
+\item 
+const string \hyperlink{main_8cpp_a0541d25e3bd8e29cd68a0a0a26de76f1}{W\+R\+I\+TE} = \char`\"{}game.\+txt\char`\"{}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{main.\+cpp@{main.\+cpp}!check4check@{check4check}}
+\index{check4check@{check4check}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{\texorpdfstring{check4check(\+Piece $\ast$$\ast$all, Piece $\ast$$\ast$kings)}{check4check(Piece **all, Piece **kings)}}]{\setlength{\rightskip}{0pt plus 5cm}void check4check (
+\begin{DoxyParamCaption}
+\item[{{\bf Piece} $\ast$$\ast$}]{all, }
+\item[{{\bf Piece} $\ast$$\ast$}]{kings}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8cpp_a710cff68311c045ceee4ccc30eae9ca6}{}\label{main_8cpp_a710cff68311c045ceee4ccc30eae9ca6}
+Loop through all Pieces, then all Pieces\textquotesingle{} available\+Positions. See if a king is in check and print a message if so. 
+
+Definition at line 330 of file main.\+cpp.
+
+\index{main.\+cpp@{main.\+cpp}!clean\+Up@{clean\+Up}}
+\index{clean\+Up@{clean\+Up}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{\texorpdfstring{clean\+Up(\+Piece $\ast$$\ast$pawns, Piece $\ast$$\ast$knights, Piece $\ast$$\ast$bishops, Piece $\ast$$\ast$rooks, Piece $\ast$$\ast$kings, Piece $\ast$$\ast$queens, Piece $\ast$$\ast$all, Piece $\ast$$\ast$piece)}{cleanUp(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks, Piece **kings, Piece **queens, Piece **all, Piece **piece)}}]{\setlength{\rightskip}{0pt plus 5cm}void clean\+Up (
+\begin{DoxyParamCaption}
+\item[{{\bf Piece} $\ast$$\ast$}]{pawns, }
+\item[{{\bf Piece} $\ast$$\ast$}]{knights, }
+\item[{{\bf Piece} $\ast$$\ast$}]{bishops, }
+\item[{{\bf Piece} $\ast$$\ast$}]{rooks, }
+\item[{{\bf Piece} $\ast$$\ast$}]{kings, }
+\item[{{\bf Piece} $\ast$$\ast$}]{queens, }
+\item[{{\bf Piece} $\ast$$\ast$}]{all, }
+\item[{{\bf Piece} $\ast$$\ast$}]{piece}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8cpp_a2c0ed726348eabc1d0870f40aa356498}{}\label{main_8cpp_a2c0ed726348eabc1d0870f40aa356498}
+Delete and and clean all uses of dynamic memory. 
+
+Definition at line 153 of file main.\+cpp.
+
+\index{main.\+cpp@{main.\+cpp}!collect\+Input@{collect\+Input}}
+\index{collect\+Input@{collect\+Input}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{\texorpdfstring{collect\+Input(string \&input, string \&input2, Piece $\ast$$\ast$all, Piece $\ast$$\ast$piece, fstream \&f, map$<$ string, int $>$ \&m, short \&col, short \&turn, Piece $\ast$$\ast$kings)}{collectInput(string &input, string &input2, Piece **all, Piece **piece, fstream &f, map< string, int > &m, short &col, short &turn, Piece **kings)}}]{\setlength{\rightskip}{0pt plus 5cm}void collect\+Input (
+\begin{DoxyParamCaption}
+\item[{string \&}]{input, }
+\item[{string \&}]{input2, }
+\item[{{\bf Piece} $\ast$$\ast$}]{all, }
+\item[{{\bf Piece} $\ast$$\ast$}]{piece, }
+\item[{fstream \&}]{f, }
+\item[{map$<$ string, int $>$ \&}]{m, }
+\item[{short \&}]{col, }
+\item[{short \&}]{turn, }
+\item[{{\bf Piece} $\ast$$\ast$}]{kings}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8cpp_a956389361790fe2c581a4634495acda1}{}\label{main_8cpp_a956389361790fe2c581a4634495acda1}
+Collect a target \hyperlink{class_piece}{Piece} to maneuver, then collect a destination square for that \hyperlink{class_piece}{Piece}. Update the Board, then process the next player\textquotesingle{}s turn. 
+
+Definition at line 276 of file main.\+cpp.
+
+\index{main.\+cpp@{main.\+cpp}!draw\+Board@{draw\+Board}}
+\index{draw\+Board@{draw\+Board}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{\texorpdfstring{draw\+Board(fstream \&new\+Game, short \&col)}{drawBoard(fstream &newGame, short &col)}}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Board (
+\begin{DoxyParamCaption}
+\item[{fstream \&}]{new\+Game, }
+\item[{short \&}]{col}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8cpp_acbb08b4dcc07e59a39127c08b173fcbd}{}\label{main_8cpp_acbb08b4dcc07e59a39127c08b173fcbd}
+Reads the Board from the game file and prints all characters onto the Board. Also displays A-\/H and 0-\/7 coordinate-\/system-\/\+UI 
+
+Definition at line 422 of file main.\+cpp.
+
+\index{main.\+cpp@{main.\+cpp}!init\+Coords@{init\+Coords}}
+\index{init\+Coords@{init\+Coords}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{\texorpdfstring{init\+Coords(map$<$ string, int $>$ \&m)}{initCoords(map< string, int > &m)}}]{\setlength{\rightskip}{0pt plus 5cm}void init\+Coords (
+\begin{DoxyParamCaption}
+\item[{map$<$ string, int $>$ \&}]{m}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8cpp_a6444331b153d596d89373aa8d7e0b59d}{}\label{main_8cpp_a6444331b153d596d89373aa8d7e0b59d}
+Map the coordinates on the grid where the letters should appear for each grid square. A0 = square 1, H7 = square 64, representing an 8x8 grid. 
+
+Definition at line 479 of file main.\+cpp.
+
+\index{main.\+cpp@{main.\+cpp}!init\+Piece@{init\+Piece}}
+\index{init\+Piece@{init\+Piece}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{\texorpdfstring{init\+Piece(\+Piece $\ast$$\ast$type, Piece $\ast$$\ast$all, short size)}{initPiece(Piece **type, Piece **all, short size)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ void init\+Piece (
+\begin{DoxyParamCaption}
+\item[{{\bf Piece} $\ast$$\ast$}]{type, }
+\item[{{\bf Piece} $\ast$$\ast$}]{all, }
+\item[{short}]{size}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8cpp_aaed4f7a95c858511e4dc3f56995903b8}{}\label{main_8cpp_aaed4f7a95c858511e4dc3f56995903b8}
+Initialize the Pawns 
+
+Definition at line 68 of file main.\+cpp.
+
+\index{main.\+cpp@{main.\+cpp}!init\+Piece@{init\+Piece}}
+\index{init\+Piece@{init\+Piece}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{\texorpdfstring{init\+Piece(\+Piece $\ast$$\ast$type, Piece $\ast$$\ast$all, short size, short a, short b, short index)}{initPiece(Piece **type, Piece **all, short size, short a, short b, short index)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ void init\+Piece (
+\begin{DoxyParamCaption}
+\item[{{\bf Piece} $\ast$$\ast$}]{type, }
+\item[{{\bf Piece} $\ast$$\ast$}]{all, }
+\item[{short}]{size, }
+\item[{short}]{a, }
+\item[{short}]{b, }
+\item[{short}]{index}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8cpp_ad485d65fa04c45c00b5205f922ff7182}{}\label{main_8cpp_ad485d65fa04c45c00b5205f922ff7182}
+Initialize the rest of the Pieces 
+
+Definition at line 83 of file main.\+cpp.
+
+\index{main.\+cpp@{main.\+cpp}!init\+Pieces@{init\+Pieces}}
+\index{init\+Pieces@{init\+Pieces}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{\texorpdfstring{init\+Pieces(\+Piece $\ast$$\ast$pawns, Piece $\ast$$\ast$knights, Piece $\ast$$\ast$bishops, Piece $\ast$$\ast$rooks, Piece $\ast$$\ast$kings, Piece $\ast$$\ast$queens, Piece $\ast$$\ast$all)}{initPieces(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks, Piece **kings, Piece **queens, Piece **all)}}]{\setlength{\rightskip}{0pt plus 5cm}void init\+Pieces (
+\begin{DoxyParamCaption}
+\item[{{\bf Piece} $\ast$$\ast$}]{pawns, }
+\item[{{\bf Piece} $\ast$$\ast$}]{knights, }
+\item[{{\bf Piece} $\ast$$\ast$}]{bishops, }
+\item[{{\bf Piece} $\ast$$\ast$}]{rooks, }
+\item[{{\bf Piece} $\ast$$\ast$}]{kings, }
+\item[{{\bf Piece} $\ast$$\ast$}]{queens, }
+\item[{{\bf Piece} $\ast$$\ast$}]{all}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8cpp_a7968a1ad5805e21a2719c066ab2bc386}{}\label{main_8cpp_a7968a1ad5805e21a2719c066ab2bc386}
+Initialize all pieces in the arrays. 
+
+Definition at line 386 of file main.\+cpp.
+
+\index{main.\+cpp@{main.\+cpp}!main@{main}}
+\index{main@{main}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$$\ast$argv)}{main(int argc, char **argv)}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{}\label{main_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}
+Create the coordinate system. Clear the Board so that it is blank, then initialize Pieces in their starting positions. While-\/loop until a king has been captured, meanwhile collect input. When a king is captured, display who the loser of the game is. 
+
+Definition at line 102 of file main.\+cpp.
+
+\index{main.\+cpp@{main.\+cpp}!proceed@{proceed}}
+\index{proceed@{proceed}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{\texorpdfstring{proceed(\+Piece $\ast$$\ast$piece, Piece $\ast$$\ast$all, string \&input, short \&turn)}{proceed(Piece **piece, Piece **all, string &input, short &turn)}}]{\setlength{\rightskip}{0pt plus 5cm}bool proceed (
+\begin{DoxyParamCaption}
+\item[{{\bf Piece} $\ast$$\ast$}]{piece, }
+\item[{{\bf Piece} $\ast$$\ast$}]{all, }
+\item[{string \&}]{input, }
+\item[{short \&}]{turn}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8cpp_aa9694c3d590b73cbaecba769bebee7c5}{}\label{main_8cpp_aa9694c3d590b73cbaecba769bebee7c5}
+Collect the first input, that is, the \hyperlink{class_piece}{Piece} to maneuver. Exit early if the wrong player is taking a turn. 
+
+Definition at line 230 of file main.\+cpp.
+
+\index{main.\+cpp@{main.\+cpp}!refresh\+Board@{refresh\+Board}}
+\index{refresh\+Board@{refresh\+Board}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{\texorpdfstring{refresh\+Board()}{refreshBoard()}}]{\setlength{\rightskip}{0pt plus 5cm}void refresh\+Board (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8cpp_a460fb296898806fec6667a62a14676cb}{}\label{main_8cpp_a460fb296898806fec6667a62a14676cb}
+Rewrite the board from a read-\/only file containing the blank map with no pieces. 
+
+Definition at line 401 of file main.\+cpp.
+
+\index{main.\+cpp@{main.\+cpp}!set\+All\+Index@{set\+All\+Index}}
+\index{set\+All\+Index@{set\+All\+Index}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{\texorpdfstring{set\+All\+Index(\+Piece $\ast$$\ast$all, Piece $\ast$$\ast$type, short i, short index, short half)}{setAllIndex(Piece **all, Piece **type, short i, short index, short half)}}]{\setlength{\rightskip}{0pt plus 5cm}void set\+All\+Index (
+\begin{DoxyParamCaption}
+\item[{{\bf Piece} $\ast$$\ast$}]{all, }
+\item[{{\bf Piece} $\ast$$\ast$}]{type, }
+\item[{short}]{i, }
+\item[{short}]{index, }
+\item[{short}]{half}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8cpp_ae34c19d5c237a304314afd5ab91a8a2e}{}\label{main_8cpp_ae34c19d5c237a304314afd5ab91a8a2e}
+Sets the index of \hyperlink{class_piece}{Piece} $\ast$$\ast$all to the correct value of a specific \hyperlink{class_piece}{Piece} in a specific \hyperlink{class_piece}{Piece} array, such as rooks, or pawns for example. 
+
+Definition at line 374 of file main.\+cpp.
+
+\index{main.\+cpp@{main.\+cpp}!update\+Hints@{update\+Hints}}
+\index{update\+Hints@{update\+Hints}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{\texorpdfstring{update\+Hints(fstream \&f, vector$<$ string $>$ \&v, map$<$ string, int $>$ m, string val, bool print)}{updateHints(fstream &f, vector< string > &v, map< string, int > m, string val, bool print)}}]{\setlength{\rightskip}{0pt plus 5cm}void update\+Hints (
+\begin{DoxyParamCaption}
+\item[{fstream \&}]{f, }
+\item[{vector$<$ string $>$ \&}]{v, }
+\item[{map$<$ string, int $>$}]{m, }
+\item[{string}]{val, }
+\item[{bool}]{print}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8cpp_a83634c8b8036d339c72a5fb026c238aa}{}\label{main_8cpp_a83634c8b8036d339c72a5fb026c238aa}
+Sets or removes in the game file, the hint symbols $\ast$. If print set to true, this will print the available position coordinates while player is selecting their destination square. 
+
+Definition at line 357 of file main.\+cpp.
+
+\index{main.\+cpp@{main.\+cpp}!validate\+Input@{validate\+Input}}
+\index{validate\+Input@{validate\+Input}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{\texorpdfstring{validate\+Input(string \&input)}{validateInput(string &input)}}]{\setlength{\rightskip}{0pt plus 5cm}bool validate\+Input (
+\begin{DoxyParamCaption}
+\item[{string \&}]{input}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8cpp_a908402886673f8a7a5dc4f54e6057602}{}\label{main_8cpp_a908402886673f8a7a5dc4f54e6057602}
+Make sure the input is in this format, no exceptions\+: Letter (A-\/H) Number 0-\/8 Example\+: A0 or H7 
+
+Definition at line 201 of file main.\+cpp.
+
+
+
+\subsection{Variable Documentation}
+\index{main.\+cpp@{main.\+cpp}!R\+E\+AD@{R\+E\+AD}}
+\index{R\+E\+AD@{R\+E\+AD}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{\texorpdfstring{R\+E\+AD}{READ}}]{\setlength{\rightskip}{0pt plus 5cm}const string R\+E\+AD = \char`\"{}newgame.\+txt\char`\"{}}\hypertarget{main_8cpp_acec89b22d9ab6e6b45e9b90207a51a3b}{}\label{main_8cpp_acec89b22d9ab6e6b45e9b90207a51a3b}
+
+
+Definition at line 61 of file main.\+cpp.
+
+\index{main.\+cpp@{main.\+cpp}!W\+R\+I\+TE@{W\+R\+I\+TE}}
+\index{W\+R\+I\+TE@{W\+R\+I\+TE}!main.\+cpp@{main.\+cpp}}
+\subsubsection[{\texorpdfstring{W\+R\+I\+TE}{WRITE}}]{\setlength{\rightskip}{0pt plus 5cm}const string W\+R\+I\+TE = \char`\"{}game.\+txt\char`\"{}}\hypertarget{main_8cpp_a0541d25e3bd8e29cd68a0a0a26de76f1}{}\label{main_8cpp_a0541d25e3bd8e29cd68a0a0a26de76f1}
+
+
+Definition at line 62 of file main.\+cpp.
+
