@@ -32,12 +32,12 @@ public:
         string input, string input2);
     static void drawPieces(fstream& file, map<string, int>& m,
         Piece **pieces, short iters);
-    Piece* getPieceForPos(Piece **all, string s);
-    virtual vector<string> getAvailPositions(Piece **all) = 0;
+    static Piece* getPieceForPos(Piece **all, string s);
+    virtual vector<string> getAvailPositions(Piece **all, bool exclude) = 0;
+    
 protected:
     string symbol;
     string position;
-    vector<string> availPositions;
     static char valids[16];
     void removeInvalids(vector<string>& v);
     void rmvSameSymb(Piece **piece, vector<string>& v);

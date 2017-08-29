@@ -1,0 +1,341 @@
+\hypertarget{class_piece}{}\section{Piece Class Reference}
+\label{class_piece}\index{Piece@{Piece}}
+
+
+{\ttfamily \#include $<$Piece.\+h$>$}
+
+Inheritance diagram for Piece\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_piece}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_piece_a8b0e865b1cfdc0e87ececdd80febfe9a}{Piece} (string \hyperlink{class_piece_a1b93d0ecc14e15fc7f3fb5def518502a}{position})
+\item 
+virtual \hyperlink{class_piece_a5d7a4f6bade94cb33b6f634de8aa7918}{$\sim$\+Piece} ()
+\item 
+string \hyperlink{class_piece_a4fa31a8bbea35a6ce0fde5d52d96774b}{get\+Position} ()
+\item 
+void \hyperlink{class_piece_a64c41f989409d75c48949519aa3e7d38}{set\+Position} (string \hyperlink{class_piece_a1b93d0ecc14e15fc7f3fb5def518502a}{position})
+\item 
+string \hyperlink{class_piece_a298e07af4a4cb4b8d180e92afd70ffe9}{get\+Symbol} ()
+\item 
+void \hyperlink{class_piece_ac82f95ec7d998195bdd011a8ee2f3204}{set\+Symbol} (char \hyperlink{class_piece_ab1063e521716374d9a97eddf169be096}{symbol})
+\item 
+void \hyperlink{class_piece_af60f38fc97d33416b6286d5e74c33778}{move} (\hyperlink{class_piece}{Piece} $\ast$$\ast$all, fstream \&f, map$<$ string, int $>$ \&m, string input, string input2)
+\item 
+\hyperlink{class_piece}{Piece} $\ast$ \hyperlink{class_piece_acd99f07eb824e56af8e2025d68efafd3}{get\+Piece\+For\+Pos} (\hyperlink{class_piece}{Piece} $\ast$$\ast$all, string s)
+\item 
+virtual vector$<$ string $>$ \hyperlink{class_piece_a4c717dfd8c910e2088bee2c4c6792c10}{get\+Avail\+Positions} (\hyperlink{class_piece}{Piece} $\ast$$\ast$all)=0
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{class_piece_a0cd78824f4ad57ce5772ddaf28b152b0}{draw\+Pieces} (fstream \&file, map$<$ string, int $>$ \&m, \hyperlink{class_piece}{Piece} $\ast$$\ast$pieces, short iters)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_piece_a4e89ae7011b06d46dc4ba76b6f676791}{remove\+Invalids} (vector$<$ string $>$ \&v)
+\item 
+void \hyperlink{class_piece_a5af40f3573b8963bdd202a750268c3e9}{rmv\+Same\+Symb} (\hyperlink{class_piece}{Piece} $\ast$$\ast$piece, vector$<$ string $>$ \&v)
+\item 
+bool \hyperlink{class_piece_afbd16578f663257d4dea5beefcdcecb4}{is\+Occ} (\hyperlink{class_piece}{Piece} $\ast$$\ast$all, string s)
+\item 
+bool \hyperlink{class_piece_afc9b134f63e2b3d5891e2ba0699edf95}{same\+Symb} (string s)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string \hyperlink{class_piece_ab1063e521716374d9a97eddf169be096}{symbol}
+\item 
+string \hyperlink{class_piece_a1b93d0ecc14e15fc7f3fb5def518502a}{position}
+\item 
+vector$<$ string $>$ \hyperlink{class_piece_aba40a894958b12d2e9f2d3b8ac192316}{avail\+Positions}
+\end{DoxyCompactItemize}
+\subsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static char \hyperlink{class_piece_af96dfaa19d200cac55748774dbb1a56a}{valids} \mbox{[}16\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 22 of file Piece.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Piece@{Piece}!Piece@{Piece}}
+\index{Piece@{Piece}!Piece@{Piece}}
+\subsubsection[{\texorpdfstring{Piece(string position)}{Piece(string position)}}]{\setlength{\rightskip}{0pt plus 5cm}Piece\+::\+Piece (
+\begin{DoxyParamCaption}
+\item[{string}]{position}
+\end{DoxyParamCaption}
+)}\hypertarget{class_piece_a8b0e865b1cfdc0e87ececdd80febfe9a}{}\label{class_piece_a8b0e865b1cfdc0e87ececdd80febfe9a}
+Construct a \hyperlink{class_piece}{Piece} at a given position coordinate. 
+\begin{DoxyParams}{Parameters}
+{\em position} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 15 of file Piece.\+cpp.
+
+\index{Piece@{Piece}!````~Piece@{$\sim$\+Piece}}
+\index{````~Piece@{$\sim$\+Piece}!Piece@{Piece}}
+\subsubsection[{\texorpdfstring{$\sim$\+Piece()}{~Piece()}}]{\setlength{\rightskip}{0pt plus 5cm}Piece\+::$\sim$\+Piece (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_piece_a5d7a4f6bade94cb33b6f634de8aa7918}{}\label{class_piece_a5d7a4f6bade94cb33b6f634de8aa7918}
+
+
+Definition at line 20 of file Piece.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\index{Piece@{Piece}!draw\+Pieces@{draw\+Pieces}}
+\index{draw\+Pieces@{draw\+Pieces}!Piece@{Piece}}
+\subsubsection[{\texorpdfstring{draw\+Pieces(fstream \&file, map$<$ string, int $>$ \&m, Piece $\ast$$\ast$pieces, short iters)}{drawPieces(fstream &file, map< string, int > &m, Piece **pieces, short iters)}}]{\setlength{\rightskip}{0pt plus 5cm}void Piece\+::draw\+Pieces (
+\begin{DoxyParamCaption}
+\item[{fstream \&}]{file, }
+\item[{map$<$ string, int $>$ \&}]{m, }
+\item[{{\bf Piece} $\ast$$\ast$}]{pieces, }
+\item[{short}]{iters}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_piece_a0cd78824f4ad57ce5772ddaf28b152b0}{}\label{class_piece_a0cd78824f4ad57ce5772ddaf28b152b0}
+Write a number of Pieces to the game file. Ignore if \hyperlink{class_piece}{Piece} was captured. 
+\begin{DoxyParams}{Parameters}
+{\em file} & The game file. \\
+\hline
+{\em m} & The coordinates map. \\
+\hline
+{\em pieces} & The Pieces to draw. \\
+\hline
+{\em iters} & The number of Pieces. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 80 of file Piece.\+cpp.
+
+\index{Piece@{Piece}!get\+Avail\+Positions@{get\+Avail\+Positions}}
+\index{get\+Avail\+Positions@{get\+Avail\+Positions}!Piece@{Piece}}
+\subsubsection[{\texorpdfstring{get\+Avail\+Positions(\+Piece $\ast$$\ast$all)=0}{getAvailPositions(Piece **all)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual vector$<$string$>$ Piece\+::get\+Avail\+Positions (
+\begin{DoxyParamCaption}
+\item[{{\bf Piece} $\ast$$\ast$}]{all}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{class_piece_a4c717dfd8c910e2088bee2c4c6792c10}{}\label{class_piece_a4c717dfd8c910e2088bee2c4c6792c10}
+
+
+Implemented in \hyperlink{class_bishop_aa5f69fac3ca28996f5c40e34f68822be}{Bishop}, \hyperlink{class_queen_ac9d5264dfe75162fa10e717b3962fdaf}{Queen}, \hyperlink{class_king_aa4d67d5f446902213730ff76a6faab54}{King}, \hyperlink{class_knight_abef9508ede89c70a482ecdd3f08a9d04}{Knight}, \hyperlink{class_rook_a96e1e49295f230cda98007a7df6d65fa}{Rook}, and \hyperlink{class_pawn_a140eb39f4412a235d3e1ab5f533725e8}{Pawn}.
+
+\index{Piece@{Piece}!get\+Piece\+For\+Pos@{get\+Piece\+For\+Pos}}
+\index{get\+Piece\+For\+Pos@{get\+Piece\+For\+Pos}!Piece@{Piece}}
+\subsubsection[{\texorpdfstring{get\+Piece\+For\+Pos(\+Piece $\ast$$\ast$all, string s)}{getPieceForPos(Piece **all, string s)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Piece} $\ast$ Piece\+::get\+Piece\+For\+Pos (
+\begin{DoxyParamCaption}
+\item[{{\bf Piece} $\ast$$\ast$}]{all, }
+\item[{string}]{s}
+\end{DoxyParamCaption}
+)}\hypertarget{class_piece_acd99f07eb824e56af8e2025d68efafd3}{}\label{class_piece_acd99f07eb824e56af8e2025d68efafd3}
+Gets a \hyperlink{class_piece}{Piece} given a position. 
+\begin{DoxyParams}{Parameters}
+{\em all} & The 32 Pieces. \\
+\hline
+{\em s} & The position string. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The \hyperlink{class_piece}{Piece} at the specified position, or N\+U\+LL. 
+\end{DoxyReturn}
+
+
+Definition at line 169 of file Piece.\+cpp.
+
+\index{Piece@{Piece}!get\+Position@{get\+Position}}
+\index{get\+Position@{get\+Position}!Piece@{Piece}}
+\subsubsection[{\texorpdfstring{get\+Position()}{getPosition()}}]{\setlength{\rightskip}{0pt plus 5cm}string Piece\+::get\+Position (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_piece_a4fa31a8bbea35a6ce0fde5d52d96774b}{}\label{class_piece_a4fa31a8bbea35a6ce0fde5d52d96774b}
+
+
+Definition at line 34 of file Piece.\+cpp.
+
+\index{Piece@{Piece}!get\+Symbol@{get\+Symbol}}
+\index{get\+Symbol@{get\+Symbol}!Piece@{Piece}}
+\subsubsection[{\texorpdfstring{get\+Symbol()}{getSymbol()}}]{\setlength{\rightskip}{0pt plus 5cm}string Piece\+::get\+Symbol (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_piece_a298e07af4a4cb4b8d180e92afd70ffe9}{}\label{class_piece_a298e07af4a4cb4b8d180e92afd70ffe9}
+
+
+Definition at line 22 of file Piece.\+cpp.
+
+\index{Piece@{Piece}!is\+Occ@{is\+Occ}}
+\index{is\+Occ@{is\+Occ}!Piece@{Piece}}
+\subsubsection[{\texorpdfstring{is\+Occ(\+Piece $\ast$$\ast$all, string s)}{isOcc(Piece **all, string s)}}]{\setlength{\rightskip}{0pt plus 5cm}bool Piece\+::is\+Occ (
+\begin{DoxyParamCaption}
+\item[{{\bf Piece} $\ast$$\ast$}]{all, }
+\item[{string}]{s}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_piece_afbd16578f663257d4dea5beefcdcecb4}{}\label{class_piece_afbd16578f663257d4dea5beefcdcecb4}
+Check if a position is occupied. 
+\begin{DoxyParams}{Parameters}
+{\em all} & The 32 Pieces. \\
+\hline
+{\em s} & The position to check. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if position is occupied. False otherwise. 
+\end{DoxyReturn}
+
+
+Definition at line 100 of file Piece.\+cpp.
+
+\index{Piece@{Piece}!move@{move}}
+\index{move@{move}!Piece@{Piece}}
+\subsubsection[{\texorpdfstring{move(\+Piece $\ast$$\ast$all, fstream \&f, map$<$ string, int $>$ \&m, string input, string input2)}{move(Piece **all, fstream &f, map< string, int > &m, string input, string input2)}}]{\setlength{\rightskip}{0pt plus 5cm}void Piece\+::move (
+\begin{DoxyParamCaption}
+\item[{{\bf Piece} $\ast$$\ast$}]{all, }
+\item[{fstream \&}]{f, }
+\item[{map$<$ string, int $>$ \&}]{m, }
+\item[{string}]{input, }
+\item[{string}]{input2}
+\end{DoxyParamCaption}
+)}\hypertarget{class_piece_af60f38fc97d33416b6286d5e74c33778}{}\label{class_piece_af60f38fc97d33416b6286d5e74c33778}
+Change the position of a \hyperlink{class_piece}{Piece} inside the game file. 
+\begin{DoxyParams}{Parameters}
+{\em all} & The 32 Pieces. \\
+\hline
+{\em f} & The file to write to. \\
+\hline
+{\em m} & The coordinates map. \\
+\hline
+{\em input} & The selected position. \\
+\hline
+{\em input2} & The destination position. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 52 of file Piece.\+cpp.
+
+\index{Piece@{Piece}!remove\+Invalids@{remove\+Invalids}}
+\index{remove\+Invalids@{remove\+Invalids}!Piece@{Piece}}
+\subsubsection[{\texorpdfstring{remove\+Invalids(vector$<$ string $>$ \&v)}{removeInvalids(vector< string > &v)}}]{\setlength{\rightskip}{0pt plus 5cm}void Piece\+::remove\+Invalids (
+\begin{DoxyParamCaption}
+\item[{vector$<$ string $>$ \&}]{v}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_piece_a4e89ae7011b06d46dc4ba76b6f676791}{}\label{class_piece_a4e89ae7011b06d46dc4ba76b6f676791}
+Removes all invalid positions. See \char`\"{}bool invalid(string p)\char`\"{} for details. 
+\begin{DoxyParams}{Parameters}
+{\em v} & The vector containing valid and invalid positions. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 134 of file Piece.\+cpp.
+
+\index{Piece@{Piece}!rmv\+Same\+Symb@{rmv\+Same\+Symb}}
+\index{rmv\+Same\+Symb@{rmv\+Same\+Symb}!Piece@{Piece}}
+\subsubsection[{\texorpdfstring{rmv\+Same\+Symb(\+Piece $\ast$$\ast$piece, vector$<$ string $>$ \&v)}{rmvSameSymb(Piece **piece, vector< string > &v)}}]{\setlength{\rightskip}{0pt plus 5cm}void Piece\+::rmv\+Same\+Symb (
+\begin{DoxyParamCaption}
+\item[{{\bf Piece} $\ast$$\ast$}]{all, }
+\item[{vector$<$ string $>$ \&}]{v}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_piece_a5af40f3573b8963bdd202a750268c3e9}{}\label{class_piece_a5af40f3573b8963bdd202a750268c3e9}
+Remove positions where our teams pieces are. 
+\begin{DoxyParams}{Parameters}
+{\em all} & The 32 Pieces. \\
+\hline
+{\em v} & The vector containing positions of our team and enemies. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 144 of file Piece.\+cpp.
+
+\index{Piece@{Piece}!same\+Symb@{same\+Symb}}
+\index{same\+Symb@{same\+Symb}!Piece@{Piece}}
+\subsubsection[{\texorpdfstring{same\+Symb(string s)}{sameSymb(string s)}}]{\setlength{\rightskip}{0pt plus 5cm}bool Piece\+::same\+Symb (
+\begin{DoxyParamCaption}
+\item[{string}]{s}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_piece_afc9b134f63e2b3d5891e2ba0699edf95}{}\label{class_piece_afc9b134f63e2b3d5891e2ba0699edf95}
+\index{Piece@{Piece}!set\+Position@{set\+Position}}
+\index{set\+Position@{set\+Position}!Piece@{Piece}}
+\subsubsection[{\texorpdfstring{set\+Position(string position)}{setPosition(string position)}}]{\setlength{\rightskip}{0pt plus 5cm}void Piece\+::set\+Position (
+\begin{DoxyParamCaption}
+\item[{string}]{position}
+\end{DoxyParamCaption}
+)}\hypertarget{class_piece_a64c41f989409d75c48949519aa3e7d38}{}\label{class_piece_a64c41f989409d75c48949519aa3e7d38}
+
+
+Definition at line 39 of file Piece.\+cpp.
+
+\index{Piece@{Piece}!set\+Symbol@{set\+Symbol}}
+\index{set\+Symbol@{set\+Symbol}!Piece@{Piece}}
+\subsubsection[{\texorpdfstring{set\+Symbol(char symbol)}{setSymbol(char symbol)}}]{\setlength{\rightskip}{0pt plus 5cm}void Piece\+::set\+Symbol (
+\begin{DoxyParamCaption}
+\item[{char}]{symbol}
+\end{DoxyParamCaption}
+)}\hypertarget{class_piece_ac82f95ec7d998195bdd011a8ee2f3204}{}\label{class_piece_ac82f95ec7d998195bdd011a8ee2f3204}
+
+
+Definition at line 27 of file Piece.\+cpp.
+
+
+
+\subsection{Member Data Documentation}
+\index{Piece@{Piece}!avail\+Positions@{avail\+Positions}}
+\index{avail\+Positions@{avail\+Positions}!Piece@{Piece}}
+\subsubsection[{\texorpdfstring{avail\+Positions}{availPositions}}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$string$>$ Piece\+::avail\+Positions\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_piece_aba40a894958b12d2e9f2d3b8ac192316}{}\label{class_piece_aba40a894958b12d2e9f2d3b8ac192316}
+
+
+Definition at line 40 of file Piece.\+h.
+
+\index{Piece@{Piece}!position@{position}}
+\index{position@{position}!Piece@{Piece}}
+\subsubsection[{\texorpdfstring{position}{position}}]{\setlength{\rightskip}{0pt plus 5cm}string Piece\+::position\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_piece_a1b93d0ecc14e15fc7f3fb5def518502a}{}\label{class_piece_a1b93d0ecc14e15fc7f3fb5def518502a}
+
+
+Definition at line 39 of file Piece.\+h.
+
+\index{Piece@{Piece}!symbol@{symbol}}
+\index{symbol@{symbol}!Piece@{Piece}}
+\subsubsection[{\texorpdfstring{symbol}{symbol}}]{\setlength{\rightskip}{0pt plus 5cm}string Piece\+::symbol\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_piece_ab1063e521716374d9a97eddf169be096}{}\label{class_piece_ab1063e521716374d9a97eddf169be096}
+
+
+Definition at line 38 of file Piece.\+h.
+
+\index{Piece@{Piece}!valids@{valids}}
+\index{valids@{valids}!Piece@{Piece}}
+\subsubsection[{\texorpdfstring{valids}{valids}}]{\setlength{\rightskip}{0pt plus 5cm}char Piece\+::valids\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}\hypertarget{class_piece_af96dfaa19d200cac55748774dbb1a56a}{}\label{class_piece_af96dfaa19d200cac55748774dbb1a56a}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+    \textcolor{charliteral}{'A'}, \textcolor{charliteral}{'B'}, \textcolor{charliteral}{'C'}, \textcolor{charliteral}{'D'}, \textcolor{charliteral}{'E'}, \textcolor{charliteral}{'F'}, \textcolor{charliteral}{'G'}, \textcolor{charliteral}{'H'},
+    \textcolor{charliteral}{'0'}, \textcolor{charliteral}{'1'}, \textcolor{charliteral}{'2'}, \textcolor{charliteral}{'3'}, \textcolor{charliteral}{'4'}, \textcolor{charliteral}{'5'}, \textcolor{charliteral}{'6'}, \textcolor{charliteral}{'7'}
+\}
+\end{DoxyCode}
+Depreciated. 
+
+Definition at line 41 of file Piece.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_piece_8h}{Piece.\+h}\item 
+\hyperlink{_piece_8cpp}{Piece.\+cpp}\end{DoxyCompactItemize}

@@ -24,8 +24,7 @@ public:
         this->symbol = "r";
     };
     virtual ~Rook();
-    
-    vector<string> getAvailPositions(Piece **all)
+    vector<string> getAvailPositions(Piece **all, bool exclude)
     {
         vector<string> v;
         bool blocked1 = false;

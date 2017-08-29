@@ -47,11 +47,13 @@ void refreshBoard();
 void setAllIndex(Piece **all, Piece **type, short i, short index, short half);
 void initPieces(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
         Piece **kings, Piece **queens, Piece **all);
-bool proceed(Piece **piece, Piece **all, string& input, short& turn);
+bool proceed(Piece **piece, Piece **all, string& input, short& turn,
+        fstream& f, map<string, int>& m, vector<string>& hints, bool& checkMag,
+        bool& checkCyan, Piece **kings);
 void collectInput(string& input, string& input2, Piece **all, Piece **piece,
         fstream& f, map<string, int>& m, short& col, short& turn,
-        Piece **kings);
-void check4check(Piece **all, Piece **kings);
+        Piece **kings, vector<string>& hints, bool& checkMag, bool& checkCyan);
+short isInCheck(Piece **all, Piece **kings);
 void cleanUp(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
         Piece **kings, Piece **queens, Piece **all, Piece **piece);
 void updateHints(fstream& f, vector<string>& v, map<string, int> m, string val,
@@ -113,6 +115,9 @@ int main(int argc, char** argv)
     Piece **kings = new Piece*[2];
     Piece **queens = new Piece*[2];
     Piece **piece = new Piece*[1];
+    vector<string> hints;
+    bool checkMag = false;
+    bool checkCyan = false;
     initPieces(pawns, knights, bishops, rooks, kings, queens, all);
     short turn = 0;
     string input, input2;
@@ -129,7 +134,8 @@ int main(int argc, char** argv)
                 && kings[1]->getPosition() != "CAP")
         {
             fstream f;
-            collectInput(input, input2, all, piece, f, m, col, turn, kings);
+            collectInput(input, input2, all, piece, f, m, col, turn, kings,
+                    hints, checkMag, checkCyan);
             f.close();
         }
         if (kings[1]->getPosition() != "CAP")
@@ -218,11 +224,22 @@ bool validateInput(string& input)
     return true;
 }
 
+vector<string> intersection(vector<string> &v1, vector<string> &v2)
+{
+    vector<string> v3;
+    sort(v1.begin(), v1.end());
+    sort(v2.begin(), v2.end());
+    set_intersection(v1.begin(),v1.end(),v2.begin(),v2.end(),back_inserter(v3));
+    return v3;
+}
+
 /**
  * Collect the first input, that is, the Piece to maneuver. Exit early if
  * the wrong player is taking a turn.
  */
-bool proceed(Piece **piece, Piece **all, string& input, short& turn)
+bool proceed(Piece **piece, Piece **all, string& input, short& turn,
+        fstream& f, map<string, int>& m, vector<string>& hints,
+        bool& checkMag, bool& checkCyan, Piece **kings)
 {
     if (turn % 2 == 0)
     {
@@ -237,6 +254,7 @@ bool proceed(Piece **piece, Piece **all, string& input, short& turn)
     cout << "Enter the coordinates of the piece you wish to move." << endl;
     cout << "Example: A1-H7." << endl;
     cout << "input: ";
+    hints.clear();
     getline(cin, input);
     if (!validateInput(input))
         return false;
@@ -245,7 +263,72 @@ bool proceed(Piece **piece, Piece **all, string& input, short& turn)
     {
         // if there is a piece at the input position given
         if (all[i]->getPosition() == input)
+        {
             piece[0] = all[i];
+            
+        }
+    }
+    cout << checkMag << " " << checkCyan << endl;
+    if (checkMag || checkCyan)
+    {
+        cout << "entering proceed check4check" << endl;
+        vector<string> v = piece[0]->getAvailPositions(all, false);
+        for (string s : v)
+        {
+            Piece *p = Piece::getPieceForPos(all, s);
+            string old_pos_2 = "";
+            if (p != NULL)
+            {
+                old_pos_2 = p->getPosition();
+                p->setPosition("CAP");
+                
+            }
+            string old_pos = piece[0]->getPosition();
+            cout << s << "               " << old_pos << endl;
+            piece[0]->setPosition(s);
+            short check = isInCheck(all, kings);
+            cout << "check: " << check << endl;
+            if (p != NULL)
+            {
+                p->setPosition(old_pos_2);
+            }
+            piece[0]->setPosition(old_pos);
+            
+            if (check > 1)
+            {
+                cout << RED <<
+                        "You can't move this because you're in check!"
+                        << RESET << endl;
+                return false;
+            }
+        }
+    }
+    // selected piece's movable positions
+    vector<string> v2 = piece[0]->getAvailPositions(all, false);
+    for (string s2 : v2)
+    {
+        for (short k = 0; k < 32; k++)
+        {
+            Piece *p = all[k];
+            if (p->getPosition() == piece[0]->getPosition())
+                continue;
+            // do not allow pawns to double move on first turn
+            vector<string> v = p->getAvailPositions(all, true);
+            if (islower(piece[0]->getSymbol()[0]) && islower(p->getSymbol()[0])
+                || isupper(piece[0]->getSymbol()[0])
+                    && isupper(p->getSymbol()[0]))
+            {
+                continue;
+            }
+            if (find(v.begin(), v.end(), s2) != v.end())
+            {
+                cout << "Piece " << p->getSymbol() << " at "
+                        << p->getPosition() << " could attack "
+                        << piece[0]->getSymbol() << " at " << s2
+                        << " if you move to " << s2 << "." << endl;
+                hints.push_back(s2); 
+            }
+        }
     }
     if (piece[0] == NULL)
         return false;
@@ -269,13 +352,15 @@ bool proceed(Piece **piece, Piece **all, string& input, short& turn)
  * that Piece. Update the Board, then process the next player's turn.
  */
 void collectInput(string& input, string& input2, Piece **all, Piece **piece,
-        fstream& f, map<string, int>& m, short& col, short& turn, Piece **kings)
+        fstream& f, map<string, int>& m, short& col, short& turn, Piece **kings,
+        vector<string>& hints, bool& checkMag, bool& checkCyan)
 {
     const string err = "ERROR! Position you selected not available! Try again.";
     bool add = true;
-    if (!proceed(piece, all, input, turn))
+    if (!proceed(piece, all, input, turn, f, m, hints, checkMag, checkCyan,
+            kings))
         return;
-    vector<string> v = piece[0]->getAvailPositions(all);
+    vector<string> v = piece[0]->getAvailPositions(all, false);
     sort(v.begin(), v.end());
     if (v.size() < 1)
     {
@@ -289,11 +374,15 @@ void collectInput(string& input, string& input2, Piece **all, Piece **piece,
     updateHints(f, v, m, "*", true);// print each string in v
     Piece::drawPieces(f, m, all, 32);
     cout << endl;
+    updateHints(f, hints, m, "X", true);
+    cout << endl;
     f.seekg(0);
     if (f.tellg() < 0)
         cout << "ERROR DETECTED!" << endl;
     drawBoard(f, col);
     updateHints(f, v, m, " ", false);
+    updateHints(f, hints, m, " ", false);
+    Piece::drawPieces(f, m, all, 32);
     cout << "Enter the coordinates of the destination space." << endl;
     cout << "input: ";
     getline(cin, input2);
@@ -313,7 +402,18 @@ void collectInput(string& input, string& input2, Piece **all, Piece **piece,
         cout << RED << err << RESET << endl;
         add = false;
     }
-    check4check(all, kings);
+    short check = isInCheck(all, kings);
+    cout << "check:::: " << check << endl;
+    if (check == 2)
+    {
+        // magenta
+        checkMag = true;
+    }
+    else if (check == 3)
+    {
+        // cyan
+        checkCyan = true;
+    }
     if (add)
         turn++;
 }
@@ -322,26 +422,32 @@ void collectInput(string& input, string& input2, Piece **all, Piece **piece,
  * Loop through all Pieces, and then all Pieces' availablePositions.
  * See if a king is in check and print a message if so.
  */
-void check4check(Piece **all, Piece **kings)
+short isInCheck(Piece **all, Piece **kings)
 {
     for (short i = 0; i < 32; i++)
     {
-        for (string pos : all[i]->getAvailPositions(all))
+        for (string pos : all[i]->getAvailPositions(all, false))
         {
-            if (pos == kings[0]->getPosition())
+            
+            if (!isupper(all[i]->getSymbol()[0]) && pos == kings[0]->getPosition())
             {
                 cout << BOLDMAGENTA << "MAGENTA" << GREEN << " is in Check!"
                         << RESET << endl;
-                return;
+                cout << "Symb: " << all[i]->getSymbol() << endl;
+
+                return 2;
             }
-            else if (pos == kings[1]->getPosition())
+            else if (!islower(all[i]->getSymbol()[0]) && pos == kings[1]->getPosition())
             {
                 cout << BOLDCYAN << "CYAN" << GREEN << " is in Check!"
                         << RESET << endl;
-                return;
+                cout << "Symb: " << all[i]->getSymbol() << endl;
+
+                return 3;
             }
         }
-    }   
+    }
+    return 0;
 }
 
 /**
@@ -382,8 +488,8 @@ void initPieces(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
         Piece **kings, Piece **queens, Piece **all)
 {
     initPiece<Pawn>(pawns, all, 16);
-    initPiece<Knight>(knights, all, 4, 1, 6, 16);
-    initPiece<Bishop>(bishops, all, 4, 2, 5, 16 + 4);
+    initPiece<Knight>(knights, all, 4, 2, 5, 16);
+    initPiece<Bishop>(bishops, all, 4, 1, 6, 16 + 4);
     initPiece<Rook>(rooks, all, 4, 0, 7, 16 + 4 + 4);
     initPiece<King>(kings, all, 2, 3, 3, 16 + 4 + 4 + 4);
     initPiece<Queen>(queens, all, 2, 4, 4, 16 + 4 + 4 + 4 + 2);
@@ -428,22 +534,26 @@ void drawBoard(fstream& newGame, short& col)
             }
             else
             {
-                cout << setw(5) << " ";
+                cout << setw(5)  << " ";
             }
             for (short i = 0; i < line.length(); i++)
             {
                 char c = line.at(i);
-                if (islower(c))
+                if (islower(c) && c != 'X')
                 {
                     cout << BOLDCYAN << c << RESET;
                 }
-                else if (isupper(c))
+                else if (isupper(c) && c != 'X')
                 {
                     cout << BOLDMAGENTA << c << RESET;
                 }
                 else if (c == '*')
                 {
                     cout << BOLDBLUE << c << RESET;
+                }
+                else if (c == 'X')
+                {
+                    cout << BOLDRED << c << RESET;
                 }
                 else
                 {
@@ -453,7 +563,7 @@ void drawBoard(fstream& newGame, short& col)
             cout << endl;
         }
         cout << left << setw(5) << "";
-        for (short k = 0; k < 8; k++)
+        for (int k = 0; k < 8; k++)
         {
             cout << "   " << k << "  "; 
         }

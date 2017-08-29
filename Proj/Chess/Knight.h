@@ -25,7 +25,7 @@ public:
     };
     virtual ~Knight();
     
-    vector<string> getAvailPositions(Piece **all)
+    vector<string> getAvailPositions(Piece **all, bool exclude)
     {
         vector<string> v;
         stringstream ss;

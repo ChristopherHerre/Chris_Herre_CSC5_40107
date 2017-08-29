@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux
-CND_ARTIFACT_NAME_Debug=chess
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/chess
+CND_ARTIFACT_NAME_Debug=chess_august
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/chess_august
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
-CND_PACKAGE_NAME_Debug=chess.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/chess.tar
+CND_PACKAGE_NAME_Debug=chessaugust.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/chessaugust.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
-CND_ARTIFACT_NAME_Release=chess
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/chess
+CND_ARTIFACT_NAME_Release=chess_august
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/chess_august
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
-CND_PACKAGE_NAME_Release=chess.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/chess.tar
+CND_PACKAGE_NAME_Release=chessaugust.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/chessaugust.tar
 #
 # include compiler specific variables
 #

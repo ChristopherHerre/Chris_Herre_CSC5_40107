@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['bgblack',['BGBLACK',['../_colors_8h.html#ab4724fec8e2574110f93d0cebf25ac92',1,'Colors.h']]],
+  ['bgblue',['BGBLUE',['../_colors_8h.html#a2c546b464622d186d669cfd8a4fa2947',1,'Colors.h']]],
+  ['bgcyan',['BGCYAN',['../_colors_8h.html#ade07cf7b38b0c36751e9c9880cb8792c',1,'Colors.h']]],
+  ['bggreen',['BGGREEN',['../_colors_8h.html#a898cbb3b8ecef2510cb6152b1f96d4c8',1,'Colors.h']]],
+  ['bgmagenta',['BGMAGENTA',['../_colors_8h.html#a96a8e22829e03241b315f0e8b34b49ad',1,'Colors.h']]],
+  ['bgred',['BGRED',['../_colors_8h.html#a95e0a3871c4ee628ff78494e0c4e459a',1,'Colors.h']]],
+  ['bgwhite',['BGWHITE',['../_colors_8h.html#ac7aa010e8e3ad6bbf4c725e52ba02168',1,'Colors.h']]],
+  ['bgyellow',['BGYELLOW',['../_colors_8h.html#ab68b1d2fc1f910b83d749ffa0a9a37f8',1,'Colors.h']]],
+  ['bishop',['Bishop',['../class_bishop.html',1,'Bishop'],['../class_bishop.html#af4568da25142a681c699ee046e3a630b',1,'Bishop::Bishop()'],['../class_bishop.html#adf07e0993c6cc5b99aa326cde0e32e95',1,'Bishop::Bishop(string position)']]],
+  ['bishop_2ecpp',['Bishop.cpp',['../_bishop_8cpp.html',1,'']]],
+  ['bishop_2eh',['Bishop.h',['../_bishop_8h.html',1,'']]],
+  ['bishop_2eo_2ed',['Bishop.o.d',['../_cygwin-_windows_2_bishop_8o_8d.html',1,'']]],
+  ['bishop_2eo_2ed',['Bishop.o.d',['../_g_n_u-_linux_2_bishop_8o_8d.html',1,'']]],
+  ['black',['BLACK',['../_colors_8h.html#a7b3b25cba33b07c303f3060fe41887f6',1,'Colors.h']]],
+  ['blue',['BLUE',['../_colors_8h.html#a79d10e672abb49ad63eeaa8aaef57c38',1,'Colors.h']]],
+  ['boldblack',['BOLDBLACK',['../_colors_8h.html#aef2fe95894117165b29036718221979f',1,'Colors.h']]],
+  ['boldblue',['BOLDBLUE',['../_colors_8h.html#a11e77c19555cbd15bcc744ff36a18635',1,'Colors.h']]],
+  ['boldcyan',['BOLDCYAN',['../_colors_8h.html#ae87af5e6363eb1913b17f24dcb60a22d',1,'Colors.h']]],
+  ['boldgreen',['BOLDGREEN',['../_colors_8h.html#a4a6c893a1703c33ede7d702fe5f97c91',1,'Colors.h']]],
+  ['boldmagenta',['BOLDMAGENTA',['../_colors_8h.html#ac4723c5ee12cfca16e2172b57b99cb07',1,'Colors.h']]],
+  ['boldred',['BOLDRED',['../_colors_8h.html#ab912d02c7998c3d47d05f87be4e2c920',1,'Colors.h']]],
+  ['boldwhite',['BOLDWHITE',['../_colors_8h.html#aa4ef051614aa0bd503b0a18ee158c5d7',1,'Colors.h']]],
+  ['boldyellow',['BOLDYELLOW',['../_colors_8h.html#a8cec79108dfc3c61e8e32d390ec28b26',1,'Colors.h']]]
+];

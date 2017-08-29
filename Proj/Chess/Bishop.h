@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /* 
  * File:   Bishop.h
@@ -30,7 +25,7 @@ public:
     };
     virtual ~Bishop();
     
-    vector<string> getAvailPositions(Piece **all)
+    vector<string> getAvailPositions(Piece **all, bool exclude)
     {
         vector<string> v;
         bool blocked1 = false;

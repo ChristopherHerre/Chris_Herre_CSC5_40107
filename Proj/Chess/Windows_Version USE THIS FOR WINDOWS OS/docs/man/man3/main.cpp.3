@@ -1,0 +1,172 @@
+.TH "main.cpp" 3 "Wed May 31 2017" "Chess" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+main.cpp \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <cstdlib>\fP
+.br
+\fC#include <iostream>\fP
+.br
+\fC#include <iomanip>\fP
+.br
+\fC#include <fstream>\fP
+.br
+\fC#include <string>\fP
+.br
+\fC#include <map>\fP
+.br
+\fC#include <sstream>\fP
+.br
+\fC#include <cctype>\fP
+.br
+\fC#include <new>\fP
+.br
+\fC#include <algorithm>\fP
+.br
+\fC#include 'Pawn\&.h'\fP
+.br
+\fC#include 'Knight\&.h'\fP
+.br
+\fC#include 'Bishop\&.h'\fP
+.br
+\fC#include 'Rook\&.h'\fP
+.br
+\fC#include 'King\&.h'\fP
+.br
+\fC#include 'Queen\&.h'\fP
+.br
+\fC#include 'Piece\&.h'\fP
+.br
+\fC#include 'Colors\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBinitCoords\fP (map< string, int > &m)"
+.br
+.ti -1c
+.RI "void \fBdrawBoard\fP (fstream &newGame, short &col)"
+.br
+.ti -1c
+.RI "void \fBrefreshBoard\fP ()"
+.br
+.ti -1c
+.RI "void \fBsetAllIndex\fP (\fBPiece\fP **all, \fBPiece\fP **type, short i, short index, short half)"
+.br
+.ti -1c
+.RI "void \fBinitPieces\fP (\fBPiece\fP **pawns, \fBPiece\fP **knights, \fBPiece\fP **bishops, \fBPiece\fP **rooks, \fBPiece\fP **kings, \fBPiece\fP **queens, \fBPiece\fP **all)"
+.br
+.ti -1c
+.RI "bool \fBproceed\fP (\fBPiece\fP **piece, \fBPiece\fP **all, string &input, short &turn)"
+.br
+.ti -1c
+.RI "void \fBcollectInput\fP (string &input, string &input2, \fBPiece\fP **all, \fBPiece\fP **piece, fstream &f, map< string, int > &m, short &col, short &turn, \fBPiece\fP **kings)"
+.br
+.ti -1c
+.RI "void \fBcheck4check\fP (\fBPiece\fP **all, \fBPiece\fP **kings)"
+.br
+.ti -1c
+.RI "void \fBcleanUp\fP (\fBPiece\fP **pawns, \fBPiece\fP **knights, \fBPiece\fP **bishops, \fBPiece\fP **rooks, \fBPiece\fP **kings, \fBPiece\fP **queens, \fBPiece\fP **all, \fBPiece\fP **piece)"
+.br
+.ti -1c
+.RI "void \fBupdateHints\fP (fstream &f, vector< string > &v, map< string, int > m, string val, bool print)"
+.br
+.ti -1c
+.RI "bool \fBvalidateInput\fP (string &input)"
+.br
+.ti -1c
+.RI "template<class T > void \fBinitPiece\fP (\fBPiece\fP **type, \fBPiece\fP **all, short size)"
+.br
+.ti -1c
+.RI "template<class T > void \fBinitPiece\fP (\fBPiece\fP **type, \fBPiece\fP **all, short size, short a, short b, short index)"
+.br
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const string \fBREAD\fP = 'newgame\&.txt'"
+.br
+.ti -1c
+.RI "const string \fBWRITE\fP = 'game\&.txt'"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "void check4check (\fBPiece\fP ** all, \fBPiece\fP ** kings)"
+Loop through all Pieces, then all Pieces' availablePositions\&. See if a king is in check and print a message if so\&. 
+.PP
+Definition at line 330 of file main\&.cpp\&.
+.SS "void cleanUp (\fBPiece\fP ** pawns, \fBPiece\fP ** knights, \fBPiece\fP ** bishops, \fBPiece\fP ** rooks, \fBPiece\fP ** kings, \fBPiece\fP ** queens, \fBPiece\fP ** all, \fBPiece\fP ** piece)"
+Delete and and clean all uses of dynamic memory\&. 
+.PP
+Definition at line 153 of file main\&.cpp\&.
+.SS "void collectInput (string & input, string & input2, \fBPiece\fP ** all, \fBPiece\fP ** piece, fstream & f, map< string, int > & m, short & col, short & turn, \fBPiece\fP ** kings)"
+Collect a target \fBPiece\fP to maneuver, then collect a destination square for that \fBPiece\fP\&. Update the Board, then process the next player's turn\&. 
+.PP
+Definition at line 276 of file main\&.cpp\&.
+.SS "void drawBoard (fstream & newGame, short & col)"
+Reads the Board from the game file and prints all characters onto the Board\&. Also displays A-H and 0-7 coordinate-system-UI 
+.PP
+Definition at line 422 of file main\&.cpp\&.
+.SS "void initCoords (map< string, int > & m)"
+Map the coordinates on the grid where the letters should appear for each grid square\&. A0 = square 1, H7 = square 64, representing an 8x8 grid\&. 
+.PP
+Definition at line 479 of file main\&.cpp\&.
+.SS "template<class T > void initPiece (\fBPiece\fP ** type, \fBPiece\fP ** all, short size)"
+Initialize the Pawns 
+.PP
+Definition at line 68 of file main\&.cpp\&.
+.SS "template<class T > void initPiece (\fBPiece\fP ** type, \fBPiece\fP ** all, short size, short a, short b, short index)"
+Initialize the rest of the Pieces 
+.PP
+Definition at line 83 of file main\&.cpp\&.
+.SS "void initPieces (\fBPiece\fP ** pawns, \fBPiece\fP ** knights, \fBPiece\fP ** bishops, \fBPiece\fP ** rooks, \fBPiece\fP ** kings, \fBPiece\fP ** queens, \fBPiece\fP ** all)"
+Initialize all pieces in the arrays\&. 
+.PP
+Definition at line 386 of file main\&.cpp\&.
+.SS "int main (int argc, char ** argv)"
+Create the coordinate system\&. Clear the Board so that it is blank, then initialize Pieces in their starting positions\&. While-loop until a king has been captured, meanwhile collect input\&. When a king is captured, display who the loser of the game is\&. 
+.PP
+Definition at line 102 of file main\&.cpp\&.
+.SS "bool proceed (\fBPiece\fP ** piece, \fBPiece\fP ** all, string & input, short & turn)"
+Collect the first input, that is, the \fBPiece\fP to maneuver\&. Exit early if the wrong player is taking a turn\&. 
+.PP
+Definition at line 230 of file main\&.cpp\&.
+.SS "void refreshBoard ()"
+Rewrite the board from a read-only file containing the blank map with no pieces\&. 
+.PP
+Definition at line 401 of file main\&.cpp\&.
+.SS "void setAllIndex (\fBPiece\fP ** all, \fBPiece\fP ** type, short i, short index, short half)"
+Sets the index of \fBPiece\fP **all to the correct value of a specific \fBPiece\fP in a specific \fBPiece\fP array, such as rooks, or pawns for example\&. 
+.PP
+Definition at line 374 of file main\&.cpp\&.
+.SS "void updateHints (fstream & f, vector< string > & v, map< string, int > m, string val, bool print)"
+Sets or removes in the game file, the hint symbols *\&. If print set to true, this will print the available position coordinates while player is selecting their destination square\&. 
+.PP
+Definition at line 357 of file main\&.cpp\&.
+.SS "bool validateInput (string & input)"
+Make sure the input is in this format, no exceptions: Letter (A-H) Number 0-8 Example: A0 or H7 
+.PP
+Definition at line 201 of file main\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const string READ = 'newgame\&.txt'"
+
+.PP
+Definition at line 61 of file main\&.cpp\&.
+.SS "const string WRITE = 'game\&.txt'"
+
+.PP
+Definition at line 62 of file main\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Chess from the source code\&.

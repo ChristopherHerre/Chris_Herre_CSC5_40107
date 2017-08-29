@@ -30,9 +30,9 @@ public:
     };
     virtual ~Queen();
     
-    vector<string> getAvailPositions(Piece **all)
+    vector<string> getAvailPositions(Piece **all, bool exclude)
     {
-        vector<string> v = Bishop::getAvailPositions(all);
+        vector<string> v = Bishop::getAvailPositions(all, exclude);
         // Rook movements
         bool blocked1 = false;
         bool blocked2 = false;
