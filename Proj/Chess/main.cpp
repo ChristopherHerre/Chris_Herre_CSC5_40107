@@ -382,8 +382,8 @@ void initPieces(Piece **pawns, Piece **knights, Piece **bishops, Piece **rooks,
         Piece **kings, Piece **queens, Piece **all)
 {
     initPiece<Pawn>(pawns, all, 16);
-    initPiece<Knight>(knights, all, 4, 2, 5, 16);
-    initPiece<Bishop>(bishops, all, 4, 1, 6, 16 + 4);
+    initPiece<Knight>(knights, all, 4, 1, 6, 16);
+    initPiece<Bishop>(bishops, all, 4, 2, 5, 16 + 4);
     initPiece<Rook>(rooks, all, 4, 0, 7, 16 + 4 + 4);
     initPiece<King>(kings, all, 2, 3, 3, 16 + 4 + 4 + 4);
     initPiece<Queen>(queens, all, 2, 4, 4, 16 + 4 + 4 + 4 + 2);
@@ -453,7 +453,7 @@ void drawBoard(fstream& newGame, short& col)
             cout << endl;
         }
         cout << left << setw(5) << "";
-        for (int k = 0; k < 8; k++)
+        for (short k = 0; k < 8; k++)
         {
             cout << "   " << k << "  "; 
         }
